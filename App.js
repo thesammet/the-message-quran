@@ -19,13 +19,16 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import COLORS from './src/constants/color'
+import TYPOGRAPHY from './src/constants/typography'
+
 
 
 function App() {
 
 
   return (
-    <Text>asd</Text>
+    <Text style={[TYPOGRAPHY.H4Bold, { color: COLORS.brown, alignSelf: 'center', marginTop: 24 }]}>Initial structure for The Message: Quran</Text>
   );
 }
 
