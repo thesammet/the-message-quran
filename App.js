@@ -1,36 +1,39 @@
-
-
+import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
+import { StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { ThemeProvider } from './src/context/Theme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Navigation from './src/navigation/Navigation';
+import { MenuProvider } from 'react-native-popup-menu';
 import COLORS from './src/constants/color'
-import TYPOGRAPHY from './src/constants/typography'
 
-
-
-function App() {
+const App = () => {
 
 
   return (
-    <Text style={[TYPOGRAPHY.H4Bold, { color: COLORS.brown, alignSelf: 'center', marginTop: 24 }]}>Initial structure for The Message: Quran</Text>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        {Platform.OS != 'ios' ? null : (
+          <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.brown }} />
+        )}
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: Platform.OS != 'ios' ? '#00AAFF' : 'white',
+          }}>
+          <MenuProvider>
+            <Navigation />
+          </MenuProvider>
+        </SafeAreaView>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
-}
+};
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
