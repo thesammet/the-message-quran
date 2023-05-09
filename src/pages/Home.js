@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
@@ -14,7 +14,7 @@ import quranChaptersSV from '../assets/source/chapters/sv.json';
 import quranChaptersTR from '../assets/source/chapters/tr.json';
 import quranChaptersUR from '../assets/source/chapters/ur.json';
 import quranChaptersZH from '../assets/source/chapters/zh.json';
-
+import { TextInput } from 'react-native-paper';
 const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
     const [searchQuery, setSearchQuery] = useState('');
@@ -116,12 +116,14 @@ const Home = ({ navigation }) => {
 
     return (
         <View style={styles.outerContainer}>
-            <CustomHeader navigation={navigation} title="Ana Sayfa" />
             <TextInput
-                style={styles.searchBox}
-                placeholder="Search for a Quran chapter..."
-                value={searchQuery}
+                placeholder="Search for a chapter.."
                 onChangeText={handleSearch}
+                value={searchQuery}
+                backgroundColor={COLORS.lightBrown}
+                mode="flat"
+                activeUnderlineColor={COLORS.brown}
+
             />
             <View style={styles.fullFlex}>
                 <View

@@ -6,11 +6,19 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Navigation from './src/navigation/Navigation';
 import { MenuProvider } from 'react-native-popup-menu';
 import COLORS from './src/constants/color'
+import { MD2LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 const App = () => {
 
-
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: 'blue',
+    },
+  };
   return (
+
     <SafeAreaProvider>
       <ThemeProvider>
         {Platform.OS != 'ios' ? null : (
@@ -22,11 +30,14 @@ const App = () => {
             backgroundColor: Platform.OS != 'ios' ? '#00AAFF' : 'white',
           }}>
           <MenuProvider>
-            <Navigation />
+            <PaperProvider theme={theme}>
+              <Navigation />
+            </PaperProvider>
           </MenuProvider>
         </SafeAreaView>
       </ThemeProvider>
     </SafeAreaProvider>
+
   );
 };
 
