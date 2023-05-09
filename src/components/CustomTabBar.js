@@ -37,7 +37,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 };
 
                 return (
-                    <View style={{ flex: 1, borderTopWidth: .5, borderTopColor: 'transparent' }}>
+                    <View style={{ flex: 1, borderTopWidth: .5, borderTopColor: 'transparent' }} key={index}>
                         <TouchableOpacity
                             key={index}
                             accessibilityRole="button"
