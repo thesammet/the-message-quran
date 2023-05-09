@@ -1,33 +1,32 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
 import CustomHeader from '../components/CustomHeader';
-import quranEditionsBN from '../assets/source/editions/bn.json';
-import quranEditionsEN from '../assets/source/editions/en.json';
-import quranEditionsES from '../assets/source/editions/es.json';
-import quranEditionsFR from '../assets/source/editions/fr.json';
-import quranEditionsID from '../assets/source/editions/id.json';
-import quranEditionsRU from '../assets/source/editions/ru.json';
-import quranEditionsSV from '../assets/source/editions/sv.json';
-import quranEditionsTR from '../assets/source/editions/tr.json';
-import quranEditionsUR from '../assets/source/editions/ur.json';
-import quranEditionsZH from '../assets/source/editions/zh.json';
+import quranVersesBN from '../assets/source/editions/bn.json';
+import quranVersesEN from '../assets/source/editions/en.json';
+import quranVersesES from '../assets/source/editions/es.json';
+import quranVersesFR from '../assets/source/editions/fr.json';
+import quranVersesID from '../assets/source/editions/id.json';
+import quranVersesRU from '../assets/source/editions/ru.json';
+import quranVersesSV from '../assets/source/editions/sv.json';
+import quranVersesTR from '../assets/source/editions/tr.json';
+import quranVersesUR from '../assets/source/editions/ur.json';
+import quranVersesZH from '../assets/source/editions/zh.json';
+import { TextInput } from 'react-native-paper';
 
 const VerseDetail = ({ route }) => {
-  const [quranEditions, setQuranEditions] = useState(quranEditionsEN);
-
-  //SEARCH
+  const [quranVerses, setQuranVerses] = useState(quranVersesEN);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredQuranEditions, setFilteredQuranEditions] = useState(quranEditions);
+  const [filteredQuranVerses, setFilteredQuranVerses] = useState(quranVerses);
 
   const handleSearch = (text) => {
     const formattedQuery = text.toLowerCase();
-    const filteredData = quranEditions.filter((edition) => {
-      return edition.text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(formattedQuery);
+    const filteredData = quranVerses[route.params.chapter].filter((verse) => {
+      return verse.text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(formattedQuery);
     });
-    setFilteredQuranEditions(filteredData);
+    setFilteredQuranVerses(filteredData);
     setSearchQuery(text);
   };
 
@@ -37,44 +36,44 @@ const VerseDetail = ({ route }) => {
     return deviceLanguage;
   };
   const handleLangChange = (lang) => {
-    let editions;
+    let verses;
 
     switch (lang) {
       case 'bn':
-        editions = quranEditionsBN;
+        verses = quranVersesBN;
         break;
       case 'en':
-        editions = quranEditionsEN;
+        verses = quranVersesEN;
         break;
       case 'es':
-        editions = quranEditionsES;
+        verses = quranVersesES;
         break;
       case 'fr':
-        editions = quranEditionsFR;
+        verses = quranVersesFR;
         break;
       case 'id':
-        editions = quranEditionsID;
+        verses = quranVersesID;
         break;
       case 'ru':
-        editions = quranEditionsRU;
+        verses = quranVersesRU;
         break;
       case 'sv':
-        editions = quranEditionsSV;
+        verses = quranVersesSV;
         break;
       case 'tr':
-        editions = quranEditionsTR;
+        verses = quranVersesTR;
         break;
       case 'ur':
-        editions = quranEditionsUR;
+        verses = quranVersesUR;
         break;
       case 'zh':
-        editions = quranEditionsZH;
+        verses = quranVersesZH;
         break;
       default:
-        editions = quranEditionsEN;
+        verses = quranVersesEN;
     }
-    setQuranEditions(editions);
-    setFilteredQuranEditions(editions)
+    setQuranVerses(verses);
+    setFilteredQuranVerses(verses[route.params.chapter])
   };
 
   useEffect(() => {
@@ -82,7 +81,7 @@ const VerseDetail = ({ route }) => {
     handleLangChange(deviceLanguage)
   }, []);
 
-  const QuranEditionItem = ({ item }) => {
+  const QuranVerseItem = ({ item }) => {
     return useMemo(() => (
       <View style={[
         styles.container
@@ -98,18 +97,20 @@ const VerseDetail = ({ route }) => {
   return (
     <View style={styles.outerContainer}>
       <TextInput
-        style={styles.searchBox}
-        placeholder="Search for a Quran verse..."
-        value={searchQuery}
+        placeholder="Search for a verse.."
         onChangeText={handleSearch}
+        value={searchQuery}
+        backgroundColor={COLORS.lightBrown}
+        mode="flat"
+        activeUnderlineColor={COLORS.brown}
       />
       <View style={styles.fullFlex}>
         <View
           style={styles.fullFlex}>
           {
             <FlatList
-              data={filteredQuranEditions[route.params.chapter]}
-              renderItem={({ item }) => <QuranEditionItem item={item} />}
+              data={filteredQuranVerses}
+              renderItem={({ item }) => <QuranVerseItem item={item} />}
               keyExtractor={(item) => item.verse}
               style={styles.list}
             />
