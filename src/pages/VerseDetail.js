@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
-import CustomHeader from '../components/CustomHeader';
 import quranVersesBN from '../assets/source/editions/bn.json';
 import quranVersesEN from '../assets/source/editions/en.json';
 import quranVersesES from '../assets/source/editions/es.json';
@@ -15,8 +14,9 @@ import quranVersesTR from '../assets/source/editions/tr.json';
 import quranVersesUR from '../assets/source/editions/ur.json';
 import quranVersesZH from '../assets/source/editions/zh.json';
 import { TextInput } from 'react-native-paper';
+import { ArrowLeft, SaveFillWhite, SaveWhite } from '../components/icons';
 
-const VerseDetail = ({ route }) => {
+const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuranVerses, setFilteredQuranVerses] = useState(quranVerses);
@@ -96,14 +96,33 @@ const VerseDetail = ({ route }) => {
 
   return (
     <View style={styles.outerContainer}>
-      <TextInput
+      <View
+        style={styles.navbackContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.8}>
+          <ArrowLeft width={28} height={28} color="white" />
+        </TouchableOpacity>
+        <Text
+          style={[TYPOGRAPHY.H4Regular, { color: COLORS.white }]}>
+          {route.params.chapter_name}
+        </Text>
+        <TouchableOpacity onPress={() => {
+          //TODO: change status
+        }}>
+          <View>
+            {true ?
+              <SaveWhite width={24} height={24} size={24} />
+              : <SaveFillWhite width={24} height={24} size={24} />}
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/*  <TextInput
         placeholder="Search for a verse.."
         onChangeText={handleSearch}
         value={searchQuery}
         backgroundColor={COLORS.lightBrown}
         mode="flat"
         activeUnderlineColor={COLORS.brown}
-      />
+      /> */}
       <View style={styles.fullFlex}>
         <View
           style={styles.fullFlex}>
@@ -112,7 +131,6 @@ const VerseDetail = ({ route }) => {
               data={filteredQuranVerses}
               renderItem={({ item }) => <QuranVerseItem item={item} />}
               keyExtractor={(item) => item.verse}
-              style={styles.list}
             />
           }
         </View>
@@ -151,8 +169,24 @@ const styles = StyleSheet.create({
     color: COLORS.brown,
 
   },
-  list: {
-    backgroundColor: '#fff',
+  navbackContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: COLORS.brown,
+    paddingTop: 10,
+    paddingBottom: 12,
+    paddingHorizontal: 16,
+    //borderBottomWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 13,
+    zIndex: 13,
   },
 })
 export default VerseDetail;

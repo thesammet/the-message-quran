@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native
 import { getLocales } from 'react-native-localize';
 import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
-import CustomHeader from '../components/CustomHeader';
 import quranChaptersBN from '../assets/source/chapters/bn.json';
 import quranChaptersEN from '../assets/source/chapters/en.json';
 import quranChaptersES from '../assets/source/chapters/es.json';
@@ -15,6 +14,7 @@ import quranChaptersTR from '../assets/source/chapters/tr.json';
 import quranChaptersUR from '../assets/source/chapters/ur.json';
 import quranChaptersZH from '../assets/source/chapters/zh.json';
 import { TextInput } from 'react-native-paper';
+import { Search, HomeIcon } from '../components/icons';
 const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
     const [searchQuery, setSearchQuery] = useState('');
@@ -92,7 +92,7 @@ const Home = ({ navigation }) => {
                 onLongPress={handleLongPress}
                 onPressOut={() => setPressed(false)}
                 onPress={() => {
-                    navigation.navigate('VerseDetail', { chapter: item.id })
+                    navigation.navigate('VerseDetail', { chapter: item.id, chapter_name: item.translation })
                 }}>
                 <View style={[
                     styles.container,
@@ -116,15 +116,25 @@ const Home = ({ navigation }) => {
 
     return (
         <View style={styles.outerContainer}>
-            <TextInput
-                placeholder="Search for a chapter.."
-                onChangeText={handleSearch}
-                value={searchQuery}
-                backgroundColor={COLORS.lightBrown}
-                mode="flat"
-                activeUnderlineColor={COLORS.brown}
-
-            />
+            <View style={styles.searchHeader}>
+                <TextInput
+                    placeholder="Search for a chapter.."
+                    onChangeText={handleSearch}
+                    value={searchQuery}
+                    mode="outlined"
+                    activeUnderlineColor={'red'}
+                    activeOutlineColor={COLORS.brown}
+                    theme={{
+                        colors: {
+                            placeholder: COLORS.brown,
+                            background: COLORS.lightBrown
+                        },
+                        roundness: 24
+                    }}
+                    style={{ flex: 1 }}
+                />
+                <Search width={32} height={32} />
+            </View>
             <View style={styles.fullFlex}>
                 <View
                     style={styles.fullFlex}>
@@ -133,7 +143,6 @@ const Home = ({ navigation }) => {
                             data={filteredQuranChapters}
                             renderItem={({ item }) => <QuranChapterItem item={item} />}
                             keyExtractor={(item) => item.id}
-                            style={styles.list}
                         />
                     }
                 </View>
@@ -193,8 +202,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#757575',
     },
-    list: {
-        backgroundColor: '#fff',
+    searchHeader: {
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        backgroundColor: COLORS.brown,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 })
 
