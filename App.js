@@ -2,11 +2,13 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native';
 import { ThemeProvider } from './src/context/Theme';
+import { FontEditorProvider } from './src/context/FontEditor';
+import { ChapterSaverProvider } from './src/context/ChapterSave';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Navigation from './src/navigation/Navigation';
 import { MenuProvider } from 'react-native-popup-menu';
 import COLORS from './src/constants/color'
-import { Provider as PaperProvider } from 'react-native-paper';
+
 
 const App = () => {
 
@@ -14,20 +16,22 @@ const App = () => {
 
     <SafeAreaProvider>
       <ThemeProvider>
-        {Platform.OS != 'ios' ? null : (
-          <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.brown }} />
-        )}
-        <SafeAreaView
-          style={{
-            flex: 1,
-            backgroundColor: Platform.OS != 'ios' ? '#00AAFF' : 'white',
-          }}>
-          <MenuProvider>
-            <PaperProvider>
-              <Navigation />
-            </PaperProvider>
-          </MenuProvider>
-        </SafeAreaView>
+        <FontEditorProvider>
+          <ChapterSaverProvider>
+            {Platform.OS != 'ios' ? null : (
+              <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.brown }} />
+            )}
+            <SafeAreaView
+              style={{
+                flex: 1,
+                backgroundColor: Platform.OS != 'ios' ? '#00AAFF' : 'white',
+              }}>
+              <MenuProvider>
+                <Navigation />
+              </MenuProvider>
+            </SafeAreaView>
+          </ChapterSaverProvider>
+        </FontEditorProvider>
       </ThemeProvider>
     </SafeAreaProvider>
 

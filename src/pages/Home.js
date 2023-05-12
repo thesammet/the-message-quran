@@ -15,6 +15,7 @@ import quranChaptersUR from '../assets/source/chapters/ur.json';
 import quranChaptersZH from '../assets/source/chapters/zh.json';
 import { TextInput } from 'react-native-paper';
 import { Search, HomeIcon } from '../components/icons';
+
 const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
     const [searchQuery, setSearchQuery] = useState('');
@@ -82,7 +83,7 @@ const Home = ({ navigation }) => {
     }, []);
 
 
-    const QuranChapterItem = ({ item }) => {
+    const QuranChapterItem = React.memo(({ item }) => {
         const [pressed, setPressed] = useState(false);
         const handleLongPress = () => {
             setPressed(true);
@@ -102,9 +103,9 @@ const Home = ({ navigation }) => {
                         <Text style={[
                             { marginRight: item.id > 99 ? 3 : 0 },
                             styles.subtitle,
-                            TYPOGRAPHY.H5Regular, { textAlign: 'center', minWidth: 30 }
+                            TYPOGRAPHY().H5Regular, { textAlign: 'center', minWidth: 30 }
                         ]}>{item.id}</Text>
-                        <Text style={[styles.title, TYPOGRAPHY.H4Medium]}>{item.translation}</Text>
+                        <Text style={[styles.title, TYPOGRAPHY().H4Medium]}>{item.translation}</Text>
                     </View>
                     <View style={styles.rightContainer}>
                         <Text style={styles.verses}>{item.total_verses} verses</Text>
@@ -112,7 +113,7 @@ const Home = ({ navigation }) => {
                 </View>
             </TouchableOpacity >
         )
-    };
+    });
 
     return (
         <View style={styles.outerContainer}>

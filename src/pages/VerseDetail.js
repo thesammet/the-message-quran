@@ -13,13 +13,13 @@ import quranVersesSV from '../assets/source/editions/sv.json';
 import quranVersesTR from '../assets/source/editions/tr.json';
 import quranVersesUR from '../assets/source/editions/ur.json';
 import quranVersesZH from '../assets/source/editions/zh.json';
-import { TextInput } from 'react-native-paper';
 import { ArrowLeft, SaveFillWhite, SaveWhite } from '../components/icons';
 
 const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuranVerses, setFilteredQuranVerses] = useState(quranVerses);
+  const [saveStatus, setSaveStatus] = useState(true)
 
   const handleSearch = (text) => {
     const formattedQuery = text.toLowerCase();
@@ -81,18 +81,18 @@ const VerseDetail = ({ navigation, route }) => {
     handleLangChange(deviceLanguage)
   }, []);
 
-  const QuranVerseItem = ({ item }) => {
-    return useMemo(() => (
+  const QuranVerseItem = React.memo(({ item }) => {
+    return (
       <View style={[
         styles.container
       ]}>
         <View style={styles.leftContainer}>
-          <Text style={[styles.subtitle, TYPOGRAPHY.H6Bold]}>{item.verse}.</Text>
-          <Text style={[styles.title, TYPOGRAPHY.H5Regular]}>{item.text}</Text>
+          <Text style={[styles.subtitle, TYPOGRAPHY().H6Bold]}>{item.verse}.</Text>
+          <Text style={[styles.title, TYPOGRAPHY().H5Regular]}>{item.text}</Text>
         </View>
       </View>
-    ), [item]);
-  };
+    )
+  });
 
   return (
     <View style={styles.outerContainer}>
@@ -102,14 +102,14 @@ const VerseDetail = ({ navigation, route }) => {
           <ArrowLeft width={28} height={28} color="white" />
         </TouchableOpacity>
         <Text
-          style={[TYPOGRAPHY.H4Regular, { color: COLORS.white }]}>
+          style={[TYPOGRAPHY().H4Regular, { color: COLORS.white }]}>
           {route.params.chapter_name}
         </Text>
         <TouchableOpacity onPress={() => {
-          //TODO: change status
+          setSaveStatus(!saveStatus)
         }}>
           <View>
-            {true ?
+            {saveStatus ?
               <SaveWhite width={24} height={24} size={24} />
               : <SaveFillWhite width={24} height={24} size={24} />}
           </View>
