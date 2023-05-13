@@ -57,13 +57,16 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                 <View>
                                     {label === 'Home' && (
                                         <View style={styles.focusedTab} >
-                                            <View style={styles.container}>
-                                                <Home width={24} height={24} color={COLORS.brown} />
-                                            </View>
+                                            <Home width={24} height={24} color={COLORS.brown} />
                                             <Text style={{ marginTop: 4, color: COLORS.brown }}>Home</Text>
                                         </View>
                                     )}
-
+                                    {label === 'Saved' && (
+                                        <View style={styles.focusedTab} >
+                                            <Home width={24} height={24} color={COLORS.brown} />
+                                            <Text style={{ marginTop: 4, color: COLORS.brown }}>Saved</Text>
+                                        </View>
+                                    )}
                                     {label === 'Settings' && (
                                         <View style={styles.focusedTab} >
                                             <Home width={24} height={24} color={COLORS.brown} />
@@ -77,9 +80,17 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                     {label === 'Home' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Home width={24} height={24} color={COLORS.brown} />
+                                                <Home width={24} height={24} color={COLORS.brown} opacity={.5} />
                                             </View>
                                             <Text style={{ marginTop: 4, color: COLORS.brown, opacity: .5 }}>Home</Text>
+                                        </View>
+                                    )}
+                                    {label === 'Saved' && (
+                                        <View style={{ alignContent: 'center', alignItems: 'center' }} >
+                                            <View style={styles.containerUnfocus}>
+                                                <Home width={24} height={24} color={COLORS.brown} opacity={.5} />
+                                            </View>
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, opacity: .5 }}>Saved</Text>
                                         </View>
                                     )}
                                     {label === 'Settings' && (

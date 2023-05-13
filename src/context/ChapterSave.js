@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const ChapterSaverContext = createContext();
 
 export const ChapterSaverProvider = ({ children }) => {
-    const [savedChapter, setSavedChapter] = useState(null);
+    const [savedChapter, setSavedChapter] = useState([]);
 
     useEffect(() => {
         const savedChapterControl = async () => {
@@ -30,11 +30,22 @@ export const ChapterSaverProvider = ({ children }) => {
         }
     };
 
+    const removeValueSavedChapter = async value => {
+        const newSavedChapter = savedChapter.filter(item => item !== value);
+        setSavedChapter(newSavedChapter);
+        try {
+            await AsyncStorage.setItem('savedChapter', newSavedChapter);
+        } catch (error) {
+            console.warn(error);
+        }
+    };
+
     return (
         <ChapterSaverContext.Provider
             value={{
                 savedChapter,
-                addValueSavedChapter
+                addValueSavedChapter,
+                removeValueSavedChapter
             }}>
             {children}
         </ChapterSaverContext.Provider>

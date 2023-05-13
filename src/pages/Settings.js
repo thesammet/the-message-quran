@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Switch, StyleSheet, SectionList } from 'react-native';
+import { Home } from '../components/icons';
 
 const sections = [
     {
@@ -29,8 +30,9 @@ const SettingsItem = ({ title, value }) => (
     </View>
 );
 
-const SectionHeader = ({ title }) => (
+const SectionHeader = ({ title, icon }) => (
     <View style={styles.sectionHeader}>
+        {icon}
         <Text style={styles.sectionTitle}>{title}</Text>
     </View>
 );
@@ -42,7 +44,7 @@ const Settings = () => (
             <SettingsItem title={item.title} value={item.value} />
         )}
         renderSectionHeader={({ section: { title } }) => (
-            <SectionHeader title={title} />
+            <SectionHeader title={title} icon={<Home name="ios-arrow-forward" width={24} height={24} color="black" />} />
         )}
     />
 );
@@ -70,6 +72,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: '#ccc',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     sectionTitle: {
         fontSize: 14,

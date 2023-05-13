@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import COLORS from '../constants/color';
@@ -14,12 +14,14 @@ import quranVersesTR from '../assets/source/editions/tr.json';
 import quranVersesUR from '../assets/source/editions/ur.json';
 import quranVersesZH from '../assets/source/editions/zh.json';
 import { ArrowLeft, SaveFillWhite, SaveWhite } from '../components/icons';
+import { ChapterSaverContext } from '../context/ChapterSave';
 
 const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuranVerses, setFilteredQuranVerses] = useState(quranVerses);
-  const [saveStatus, setSaveStatus] = useState(true)
+  const [saveStatus, setSaveStatus] = useState(null)
+  const { savedChapter, addValueSavedChapter, removeValueSavedChapter } = useContext(ChapterSaverContext);
 
   const handleSearch = (text) => {
     const formattedQuery = text.toLowerCase();
@@ -79,6 +81,8 @@ const VerseDetail = ({ navigation, route }) => {
   useEffect(() => {
     const deviceLanguage = getDeviceLanguage();
     handleLangChange(deviceLanguage)
+    const isSaved = savedChapter.includes(route.params.chapter.toString())
+    setSaveStatus(isSaved)
   }, []);
 
   const QuranVerseItem = React.memo(({ item }) => {
@@ -106,12 +110,18 @@ const VerseDetail = ({ navigation, route }) => {
           {route.params.chapter_name}
         </Text>
         <TouchableOpacity onPress={() => {
-          setSaveStatus(!saveStatus)
+          if (!saveStatus) {
+            addValueSavedChapter(route.params.chapter.toString())
+            setSaveStatus(true)
+          } else {
+            removeValueSavedChapter(route.params.chapter.toString())
+            setSaveStatus(false)
+          }
         }}>
           <View>
             {saveStatus ?
-              <SaveWhite width={24} height={24} size={24} />
-              : <SaveFillWhite width={24} height={24} size={24} />}
+              <SaveFillWhite width={24} height={24} size={24} />
+              : <SaveWhite width={24} height={24} size={24} />}
           </View>
         </TouchableOpacity>
       </View>
@@ -177,7 +187,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 12,
     paddingHorizontal: 16,
-    //borderBottomWidth: 1,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
