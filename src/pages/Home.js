@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import COLORS from '../constants/color';
-import TYPOGRAPHY from '../constants/typography';
 import quranChaptersBN from '../assets/source/chapters/bn.json';
 import quranChaptersEN from '../assets/source/chapters/en.json';
 import quranChaptersES from '../assets/source/chapters/es.json';
@@ -14,7 +13,8 @@ import quranChaptersTR from '../assets/source/chapters/tr.json';
 import quranChaptersUR from '../assets/source/chapters/ur.json';
 import quranChaptersZH from '../assets/source/chapters/zh.json';
 import { TextInput } from 'react-native-paper';
-import { Search, HomeIcon } from '../components/icons';
+import { Search } from '../components/icons';
+import QuranChapterItem from '../components/QuranChapter';
 
 const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
@@ -82,39 +82,6 @@ const Home = ({ navigation }) => {
         handleLangChange(deviceLanguage);
     }, []);
 
-
-    const QuranChapterItem = React.memo(({ item }) => {
-        const [pressed, setPressed] = useState(false);
-        const handleLongPress = () => {
-            setPressed(true);
-        };
-        return (
-            <TouchableOpacity
-                onLongPress={handleLongPress}
-                onPressOut={() => setPressed(false)}
-                onPress={() => {
-                    navigation.navigate('VerseDetail', { chapter: item.id, chapter_name: item.translation })
-                }}>
-                <View style={[
-                    styles.container,
-                    { backgroundColor: pressed ? COLORS.brown : 'white' },
-                ]}>
-                    <View style={styles.leftContainer}>
-                        <Text style={[
-                            { marginRight: item.id > 99 ? 3 : 0 },
-                            styles.subtitle,
-                            TYPOGRAPHY().H5Regular, { textAlign: 'center', minWidth: 30 }
-                        ]}>{item.id}</Text>
-                        <Text style={[styles.title, TYPOGRAPHY().H4Medium]}>{item.translation}</Text>
-                    </View>
-                    <View style={styles.rightContainer}>
-                        <Text style={styles.verses}>{item.total_verses} verses</Text>
-                    </View>
-                </View>
-            </TouchableOpacity >
-        )
-    });
-
     return (
         <View style={styles.outerContainer}>
             <View style={styles.searchHeader}>
@@ -142,7 +109,10 @@ const Home = ({ navigation }) => {
                     {
                         <FlatList
                             data={filteredQuranChapters}
-                            renderItem={({ item }) => <QuranChapterItem item={item} />}
+                            renderItem={({ item }) =>
+                                <QuranChapterItem
+                                    item={item}
+                                    navigation={navigation} />}
                             keyExtractor={(item) => item.id}
                         />
                     }

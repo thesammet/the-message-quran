@@ -12,7 +12,7 @@ export const ChapterSaverProvider = ({ children }) => {
                 const savedChapters = await AsyncStorage.getItem('savedChapter');
 
                 if (savedChapters) {
-                    setSavedChapter(savedChapters);
+                    setSavedChapter(JSON.parse(savedChapters)); // Parse the string to an array
                 }
             } catch (error) {
                 console.warn(error);
@@ -21,20 +21,26 @@ export const ChapterSaverProvider = ({ children }) => {
         savedChapterControl();
     }, []);
 
-    const addValueSavedChapter = async value => {
-        setSavedChapter([...savedChapter, value])
+    const addValueSavedChapter = async (value) => {
+        const newSavedChapter = [...savedChapter, value];
+        setSavedChapter(newSavedChapter);
         try {
-            await AsyncStorage.setItem('savedChapter', value);
+            await AsyncStorage.setItem('savedChapter', JSON.stringify(newSavedChapter)); // Stringify the array
         } catch (error) {
             console.warn(error);
         }
     };
 
-    const removeValueSavedChapter = async value => {
-        const newSavedChapter = savedChapter.filter(item => item !== value);
-        setSavedChapter(newSavedChapter);
+    const removeValueSavedChapter = async (value) => {
+        let newSavedChapter = [];
+        const index = savedChapter.indexOf(value);
+        if (index > -1) {
+            newSavedChapter = [...savedChapter];
+            newSavedChapter.splice(index, 1);
+            setSavedChapter(newSavedChapter);
+        }
         try {
-            await AsyncStorage.setItem('savedChapter', newSavedChapter);
+            await AsyncStorage.setItem('savedChapter', JSON.stringify(newSavedChapter)); // Stringify the array
         } catch (error) {
             console.warn(error);
         }
@@ -46,7 +52,8 @@ export const ChapterSaverProvider = ({ children }) => {
                 savedChapter,
                 addValueSavedChapter,
                 removeValueSavedChapter
-            }}>
+            }}
+        >
             {children}
         </ChapterSaverContext.Provider>
     );
