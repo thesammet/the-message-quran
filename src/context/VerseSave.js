@@ -21,26 +21,38 @@ export const VerseSaveProvider = ({ children }) => {
     }, []);
 
     const addSavedVerse = async (verse, chapter) => {
-        const newSavedVerses = [...savedVerses, { verse, chapter }];
-        setSavedVerses(newSavedVerses);
-        try {
-            await AsyncStorage.setItem('savedVerses', JSON.stringify(newSavedVerses));
-        } catch (error) {
-            console.warn(error);
+        const verseAlreadySaved = savedVerses.some(
+            (item) => item.verse === verse && item.chapter === chapter
+        );
+
+        if (!verseAlreadySaved) {
+            const newSavedVerses = [...savedVerses, { verse, chapter }];
+            setSavedVerses(newSavedVerses);
+            try {
+                await AsyncStorage.setItem('savedVerses', JSON.stringify(newSavedVerses));
+            } catch (error) {
+                console.warn(error);
+            }
         }
     };
 
     const removeSavedVerse = async (verse, chapter) => {
-        const newSavedVerses = savedVerses.filter(
-            (item) => item.verse !== verse || item.chapter !== chapter
+        const verseIndex = savedVerses.findIndex(
+            (item) => item.verse === verse && item.chapter === chapter
         );
-        setSavedVerses(newSavedVerses);
-        try {
-            await AsyncStorage.setItem('savedVerses', JSON.stringify(newSavedVerses));
-        } catch (error) {
-            console.warn(error);
+
+        if (verseIndex !== -1) {
+            const newSavedVerses = [...savedVerses];
+            newSavedVerses.splice(verseIndex, 1);
+            setSavedVerses(newSavedVerses);
+            try {
+                await AsyncStorage.setItem('savedVerses', JSON.stringify(newSavedVerses));
+            } catch (error) {
+                console.warn(error);
+            }
         }
     };
+
 
     return (
         <VerseSaveContext.Provider

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
+import { StyleSheet, Text, View, FlatList, Image, } from 'react-native';
 import TYPOGRAPHY from '../constants/typography';
 import COLORS from '../constants/color';
 import { getLocales } from 'react-native-localize';
 import { ChapterSaverContext } from '../context/ChapterSave';
+import { VerseSaveContext } from '../context/VerseSave';
 import quranChaptersBN from '../assets/source/chapters/bn.json';
 import quranChaptersEN from '../assets/source/chapters/en.json';
 import quranChaptersES from '../assets/source/chapters/es.json';
@@ -15,12 +16,27 @@ import quranChaptersSV from '../assets/source/chapters/sv.json';
 import quranChaptersTR from '../assets/source/chapters/tr.json';
 import quranChaptersUR from '../assets/source/chapters/ur.json';
 import quranChaptersZH from '../assets/source/chapters/zh.json';
+import quranVersesBN from '../assets/source/editions/bn.json';
+import quranVersesEN from '../assets/source/editions/en.json';
+import quranVersesES from '../assets/source/editions/es.json';
+import quranVersesFR from '../assets/source/editions/fr.json';
+import quranVersesID from '../assets/source/editions/id.json';
+import quranVersesRU from '../assets/source/editions/ru.json';
+import quranVersesSV from '../assets/source/editions/sv.json';
+import quranVersesTR from '../assets/source/editions/tr.json';
+import quranVersesUR from '../assets/source/editions/ur.json';
+import quranVersesZH from '../assets/source/editions/zh.json';
 import QuranChapterItem from '../components/QuranChapter';
+import QuranVerseItem from '../components/QuranVerse';
+import { Quran } from '../image/index';
 
 const Saved = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
-    const [filteredChatpers, setFilteredChapters] = useState([])
+    const [quranVerses, setQuranVerses] = useState(quranVersesEN);
+    const [filteredChatpers, setFilteredChapters] = useState([]);
+    const [filteredVerses, setFilteredVerses] = useState([]);
     const { savedChapter } = useContext(ChapterSaverContext);
+    const { savedVerses } = useContext(VerseSaveContext);
 
     const getDeviceLanguage = () => {
         const locales = getLocales();
@@ -30,49 +46,62 @@ const Saved = ({ navigation }) => {
 
     const handleLangChange = (lang) => {
         let chapters;
-
+        let verses;
         switch (lang) {
             case 'bn':
                 chapters = quranChaptersBN;
+                verses = quranVersesBN;
                 break;
             case 'en':
                 chapters = quranChaptersEN;
+                verses = quranVersesEN;
                 break;
             case 'es':
                 chapters = quranChaptersES;
+                verses = quranVersesES;
                 break;
             case 'fr':
                 chapters = quranChaptersFR;
+                verses = quranVersesFR;
                 break;
             case 'id':
                 chapters = quranChaptersID;
+                verses = quranVersesID;
                 break;
             case 'ru':
                 chapters = quranChaptersRU;
+                verses = quranVersesRU;
                 break;
             case 'sv':
                 chapters = quranChaptersSV;
+                verses = quranVersesSV;
                 break;
             case 'tr':
                 chapters = quranChaptersTR;
+                verses = quranVersesTR;
                 break;
             case 'ur':
                 chapters = quranChaptersUR;
+                verses = quranVersesUR;
                 break;
             case 'zh':
                 chapters = quranChaptersZH;
+                verses = quranVersesZH;
                 break;
             default:
                 chapters = quranChaptersEN;
+                verses = quranVersesEN;
         }
         setQuranChapters(chapters);
+        setQuranVerses(verses);
     };
+
 
     function findMatchingChapters(savedChapters, quranChapters) {
         const matchingChapters = [];
 
         if (!savedChapters || !quranChapters) {
-            return matchingChapters; // Return an empty array if either array is empty or undefined
+            return matchingChapters;
         }
 
         savedChapters.forEach(savedChapter => {
@@ -86,18 +115,59 @@ const Saved = ({ navigation }) => {
         return matchingChapters;
     }
 
+    function findMatchingVerses(savedVerses, quranVerses) {
+        const matchingVerses = [];
+
+        if (!savedVerses || !quranVerses) {
+            return matchingVerses;
+        }
+
+        savedVerses.forEach(savedVerse => {
+            const { chapter, verse } = savedVerse;
+
+            const matchingChapter = quranVerses[chapter];
+            if (matchingChapter) {
+                const matchingVerse = matchingChapter.find(quranVerse =>
+                    quranVerse.verse === verse
+                );
+
+                if (matchingVerse) {
+                    matchingVerses.push(matchingVerse);
+                }
+            }
+        });
+
+        return matchingVerses;
+    }
+
     useEffect(() => {
         const deviceLanguage = getDeviceLanguage();
         handleLangChange(deviceLanguage);
         const matchingChapters = findMatchingChapters(savedChapter, quranChapters);
+        const matchingVerses = findMatchingVerses(savedVerses, quranVerses)
+        setFilteredVerses(matchingVerses)
         setFilteredChapters(matchingChapters);
-    }, [savedChapter, quranChapters]);
+    }, [savedChapter,
+        quranChapters,
+        savedVerses,
+        quranVerses]);
 
     const Tab1 = () =>
-        <View style={styles.fullFlex}>
-            <View
-                style={styles.fullFlex}>
-                {
+        <View
+            style={styles.fullFlex}>
+            {
+                (filteredChatpers.length == 0 ?
+                    <View>
+                        <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>No Saved Verse</Text>
+                        <Image source={Quran}
+                            style={{
+                                height: 145,
+                                width: 225,
+                                alignSelf: 'center',
+                                marginTop: 8
+                            }} />
+                    </View>
+                    :
                     <FlatList
                         data={filteredChatpers}
                         renderItem={({ item }) =>
@@ -106,17 +176,44 @@ const Saved = ({ navigation }) => {
                                 navigation={navigation} />}
                         keyExtractor={(item) => item.id}
                     />
-                }
-            </View>
+                )
+            }
         </View>;
-    const Tab2 = () => <View><Text>Verses</Text></View>;
+
+    const Tab2 = () =>
+        <View
+            style={styles.fullFlex}>
+            {
+                (filteredVerses.length == 0 ?
+                    <View>
+                        <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>No Saved Verse</Text>
+                        <Image source={Quran}
+                            style={{
+                                height: 145,
+                                width: 225,
+                                alignSelf: 'center',
+                                marginTop: 8
+                            }} />
+                    </View> :
+                    <FlatList
+                        data={filteredVerses}
+                        renderItem={({ item }) =>
+                            <QuranVerseItem
+                                item={item}
+                                navigation={navigation} />}
+                        keyExtractor={(item) => item.text}
+                    />)
+            }
+        </View>;
+
     return (
         <ScrollableTabView
-            renderTabBar={() => <DefaultTabBar />}
-            tabBarBackgroundColor={COLORS.lightBrown}
-            tabBarActiveTextColor={COLORS.brown}
+            renderTabBar={() => <ScrollableTabBar />}
+            tabBarBackgroundColor={COLORS.brown}
+            tabBarActiveTextColor={COLORS.lightBrown}
             tabBarInactiveTextColor={COLORS.black}
-            tabBarTextStyle={{ fontSize: 16 }}
+            tabBarTextStyle={TYPOGRAPHY().H4Medium}
+            tabBarUnderlineStyle={{ backgroundColor: COLORS.white, }}
         >
             <Tab1 tabLabel='Chapter' />
             <Tab2 tabLabel='Verse' />
@@ -127,8 +224,12 @@ const Saved = ({ navigation }) => {
 const styles = StyleSheet.create({
     fullFlex: {
         flex: 1,
-        backgroundColor: 'white'
     },
+    noText: {
+        color: COLORS.brown,
+        textAlign: 'center',
+        marginTop: 64
+    }
 })
 
 export default Saved;
