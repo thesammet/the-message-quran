@@ -3,15 +3,12 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
 
-const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters }) => {
+const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters, bottomSheetRef, func }) => {
     const { chapter } = item;
     const matchingChapter = quranChapters.find((quranChapter) => quranChapter.id === chapter);
     return (
         <TouchableOpacity
-            onPress={() => {
-                setSelectedItem(item);
-                bottomSheet.current.show();
-            }}>
+            onPress={() => func()}>
             <View style={[styles.container]}>
                 <View style={styles.leftContainer}>
                     <Text style={[styles.subtitle, TYPOGRAPHY().H6Bold]}>

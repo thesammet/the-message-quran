@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
-import { StyleSheet, Text, View, FlatList, Image, } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import TYPOGRAPHY from '../constants/typography';
 import COLORS from '../constants/color';
 import { getLocales } from 'react-native-localize';
@@ -29,6 +29,7 @@ import quranVersesZH from '../assets/source/editions/zh.json';
 import QuranChapterItem from '../components/QuranChapter';
 import SavedQuranVerseItem from '../components/SavedQuranVerseItem';
 import { Quran } from '../image/index';
+import BottomSheet from "react-native-gesture-bottom-sheet";
 
 const Saved = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
@@ -36,7 +37,10 @@ const Saved = ({ navigation }) => {
     const [filteredChapters, setFilteredChapters] = useState([]);
     const [filteredVerses, setFilteredVerses] = useState([]);
     const { savedChapter } = useContext(ChapterSaverContext);
-    const { savedVerses } = useContext(VerseSaveContext);
+    const { savedVerses, addSavedVerse, removeSavedVerse } = useContext(VerseSaveContext);
+    const bottomSheetRef = useRef();
+    const [saveText, setSaveText] = useState(null)
+    const [selectedItem, setSelectedItem] = useState(true);
 
     const getDeviceLanguage = () => {
         const locales = getLocales();
@@ -204,7 +208,12 @@ const Saved = ({ navigation }) => {
                         <SavedQuranVerseItem
                             item={item}
                             navigation={navigation}
-                            quranChapters={quranChapters} // Use quranChapters instead of filteredChapters
+                            quranChapters={quranChapters}
+                            bottomSheetRef={bottomSheetRef}
+                            func={() => {
+                                setSelectedItem(item);
+                                bottomSheetRef.current.show();
+                            }}
                         />
                     )}
                     keyExtractor={(item) => item.text}
@@ -212,20 +221,70 @@ const Saved = ({ navigation }) => {
             )}
         </View>
     );
-
+    const BottomSheetItem = (({ title, func }) => {
+        return (
+            <TouchableOpacity onPress={func}>
+                <Text style={[styles.bottomSheetSubTitle, { color: COLORS.brown }, TYPOGRAPHY().H4Medium]}>{title}</Text>
+            </TouchableOpacity>
+        )
+    });
 
     return (
-        <ScrollableTabView
-            renderTabBar={() => <ScrollableTabBar />}
-            tabBarBackgroundColor={COLORS.brown}
-            tabBarActiveTextColor={COLORS.lightBrown}
-            tabBarInactiveTextColor={COLORS.black}
-            tabBarTextStyle={TYPOGRAPHY().H4Medium}
-            tabBarUnderlineStyle={{ backgroundColor: COLORS.white, }}
-        >
-            <Tab1 tabLabel='Chapter' />
-            <Tab2 tabLabel='Verse' />
-        </ScrollableTabView>
+        <View style={styles.fullFlex}>
+            <BottomSheet
+                hasDraggableIcon={true}
+                ref={bottomSheetRef}
+                height={300}
+                radius={24}
+                sheetBackgroundColor={COLORS.lightBrown}
+                backgroundColor={'transparent'}
+                draggable={true} >
+                <View style={styles.bottomSheetContent}>
+                    <View style={styles.bottomSheetInnerContent}>
+                        <Text style={styles.title}>OPTIONS</Text>
+                        <BottomSheetItem
+                            title={"Share"}
+                            func={() => { console.log("a") }}></BottomSheetItem>
+                        <BottomSheetItem
+                            title={"Copy"}
+                            func={() => { console.log("a") }}></BottomSheetItem>
+                        <BottomSheetItem
+                            title={"Unsave"}
+                            func={() => {
+                                removeSavedVerse(selectedItem?.verse, selectedItem?.chapter)
+                                bottomSheetRef.current.close()
+                            }}></BottomSheetItem>
+                        <BottomSheetItem
+                            title={"Bookmark"}
+                            func={() => { console.log("a") }}></BottomSheetItem>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            bottomSheet.current.close()
+                        }}
+                        style={{
+                            backgroundColor: COLORS.brown,
+                            width: '100%',
+                            alignItems: 'center',
+                            borderRadius: 16,
+                            paddingVertical: 8
+                        }}>
+                        <Text style={[styles.title, { color: COLORS.white }]}>CLOSE</Text>
+                    </TouchableOpacity>
+                </View>
+            </BottomSheet>
+            <ScrollableTabView
+                renderTabBar={() => <ScrollableTabBar />}
+                tabBarBackgroundColor={COLORS.brown}
+                tabBarActiveTextColor={COLORS.lightBrown}
+                tabBarInactiveTextColor={COLORS.black}
+                tabBarTextStyle={TYPOGRAPHY().H4Medium}
+                tabBarUnderlineStyle={{ backgroundColor: COLORS.white, }}
+            >
+                <Tab1 tabLabel='Chapter' />
+                <Tab2 tabLabel='Verse' />
+            </ScrollableTabView>
+        </View>
     );
 }
 
@@ -237,6 +296,19 @@ const styles = StyleSheet.create({
         color: COLORS.brown,
         textAlign: 'center',
         marginTop: 64
+    },
+    bottomSheetContent: {
+        alignItems: 'center',
+        flex: 1,
+        margin: 16,
+        justifyContent: 'space-between'
+    },
+    bottomSheetInnerContent: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    bottomSheetSubTitle: {
+        marginVertical: 8
     }
 })
 
