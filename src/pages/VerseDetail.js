@@ -38,18 +38,16 @@ const VerseDetail = ({ navigation, route }) => {
     setSearchQuery(text);
   };
 
-  const changeSaveStatus = () => {
+  const changeSaveStatus = (itemSelected) => {
     const matchedItem = savedVerses.find(
       (item) =>
-        item.chapter === selectedItem?.chapter && item.verse === selectedItem?.verse
+        item.chapter === itemSelected?.chapter && item.verse === itemSelected?.verse
     );
     if (matchedItem) {
       setSaveText(true);
     } else {
       setSaveText(false);
     }
-    console.log(savedVerses);
-    console.log(selectedItem);
   };
 
   const getDeviceLanguage = () => {
@@ -110,7 +108,7 @@ const VerseDetail = ({ navigation, route }) => {
       <TouchableOpacity onPress={() => {
         setSelectedItem(item);
         bottomSheet.current.show()
-        changeSaveStatus()
+        changeSaveStatus(item)
       }}>
         <View style={[
           styles.container

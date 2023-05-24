@@ -27,13 +27,13 @@ import quranVersesTR from '../assets/source/editions/tr.json';
 import quranVersesUR from '../assets/source/editions/ur.json';
 import quranVersesZH from '../assets/source/editions/zh.json';
 import QuranChapterItem from '../components/QuranChapter';
-import QuranVerseItem from '../components/QuranVerse';
+import SavedQuranVerseItem from '../components/SavedQuranVerseItem';
 import { Quran } from '../image/index';
 
 const Saved = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
     const [quranVerses, setQuranVerses] = useState(quranVersesEN);
-    const [filteredChatpers, setFilteredChapters] = useState([]);
+    const [filteredChapters, setFilteredChapters] = useState([]);
     const [filteredVerses, setFilteredVerses] = useState([]);
     const { savedChapter } = useContext(ChapterSaverContext);
     const { savedVerses } = useContext(VerseSaveContext);
@@ -156,9 +156,9 @@ const Saved = ({ navigation }) => {
         <View
             style={styles.fullFlex}>
             {
-                (filteredChatpers.length == 0 ?
+                (filteredChapters.length == 0 ?
                     <View>
-                        <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>No Saved Verse</Text>
+                        <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>No Saved Chapter</Text>
                         <Image source={Quran}
                             style={{
                                 height: 145,
@@ -169,7 +169,7 @@ const Saved = ({ navigation }) => {
                     </View>
                     :
                     <FlatList
-                        data={filteredChatpers}
+                        data={filteredChapters}
                         renderItem={({ item }) =>
                             <QuranChapterItem
                                 item={item}
@@ -180,31 +180,39 @@ const Saved = ({ navigation }) => {
             }
         </View>;
 
-    const Tab2 = () =>
-        <View
-            style={styles.fullFlex}>
-            {
-                (filteredVerses.length == 0 ?
-                    <View>
-                        <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>No Saved Verse</Text>
-                        <Image source={Quran}
-                            style={{
-                                height: 145,
-                                width: 225,
-                                alignSelf: 'center',
-                                marginTop: 8
-                            }} />
-                    </View> :
-                    <FlatList
-                        data={filteredVerses}
-                        renderItem={({ item }) =>
-                            <QuranVerseItem
-                                item={item}
-                                navigation={navigation} />}
-                        keyExtractor={(item) => item.text}
-                    />)
-            }
-        </View>;
+    const Tab2 = () => (
+        <View style={styles.fullFlex}>
+            {filteredVerses.length === 0 ? (
+                <View>
+                    <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>
+                        No Saved Verse
+                    </Text>
+                    <Image
+                        source={Quran}
+                        style={{
+                            height: 145,
+                            width: 225,
+                            alignSelf: 'center',
+                            marginTop: 8,
+                        }}
+                    />
+                </View>
+            ) : (
+                <FlatList
+                    data={filteredVerses}
+                    renderItem={({ item }) => (
+                        <SavedQuranVerseItem
+                            item={item}
+                            navigation={navigation}
+                            quranChapters={quranChapters} // Use quranChapters instead of filteredChapters
+                        />
+                    )}
+                    keyExtractor={(item) => item.text}
+                />
+            )}
+        </View>
+    );
+
 
     return (
         <ScrollableTabView
