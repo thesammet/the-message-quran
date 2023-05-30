@@ -159,7 +159,7 @@ const Saved = ({ navigation }) => {
 
     const Tab1 = () =>
         <View
-            style={styles.fullFlex}>
+            style={[styles.fullFlex, { backgroundColor: COLORS.bgColor }]}>
             {
                 (filteredChapters.length == 0 ?
                     <View>
@@ -231,7 +231,7 @@ const Saved = ({ navigation }) => {
     });
 
     return (
-        <View style={styles.fullFlex}>
+        <View style={[styles.fullFlex, { backgroundColor: COLORS.bgColor }]}>
             <BottomSheet
                 hasDraggableIcon={true}
                 ref={bottomSheetRef}

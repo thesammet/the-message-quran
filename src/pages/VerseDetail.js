@@ -133,7 +133,7 @@ const VerseDetail = ({ navigation, route }) => {
   });
 
   return (
-    <View style={styles.outerContainer}>
+    <View style={[styles.outerContainer, { backgroundColor: COLORS.bgColor }]}>
       <BottomSheet
         hasDraggableIcon={true}
         ref={bottomSheet}

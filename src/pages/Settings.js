@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
     View,
     Text,
@@ -16,6 +16,7 @@ import FontSelector from '../components/FontSelector';
 import TYPOGRAPHY from '../constants/typography';
 import { getLocales } from 'react-native-localize';
 import { useTheme } from '@react-navigation/native';
+import { ThemeContext } from '../context/Theme';
 
 const sections = (press, navigation) => [
     {
@@ -63,7 +64,7 @@ const sections = (press, navigation) => [
     },
     {
         title: 'Font Selection',
-        data: [{ title: 'Sizes:', value: 1 }],
+        data: [{ title: '', value: 1 }],
     },
 ];
 
@@ -261,7 +262,24 @@ const handleMailTo = async (email, subject, body) => {
 
 const Settings = ({ navigation }) => {
     const { COLORS } = useTheme();
+    const { theme, changeTheme } = useContext(ThemeContext);
+    const [isSwitchEnabled, setIsSwitchEnabled] = useState(false);
+    const toggleSwitch = () => {
+        setIsSwitchEnabled(previousState => !previousState);
+        isSwitchEnabled ? changeTheme('light') : changeTheme('dark');
+    }
+
     const handlePress = useCallback(async (url) => {
+        const supported = await Linking.canOpenURL(url);
+
+        if (supported) {
+            await Linking.openURL(url);
+        } else {
+            Alert.alert(`Don't know how to open this URL: ${url}`);
+        }
+    }, []);
+
+    const changeMode = (async (url) => {
         const supported = await Linking.canOpenURL(url);
 
         if (supported) {
@@ -277,7 +295,13 @@ const Settings = ({ navigation }) => {
                 <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor, }]}>
                     <Text style={TYPOGRAPHY().H4Medium}>{title}</Text>
                     {typeof value === 'boolean' ? (
-                        <Switch value={value} />
+                        <Switch
+                            trackColor={{ false: '#767577', true: COLORS.lightBrown }}
+                            thumbColor={isSwitchEnabled ? COLORS.brown : '#f4f3f4'}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={isSwitchEnabled}
+                        />
                     ) : typeof value === 'string' ? (
                         <ArrowLeft width={24} height={24} color={COLORS.brown} opacity={0.8} style={{ transform: [{ rotate: '180deg' }] }} />
                     ) : (
@@ -289,7 +313,13 @@ const Settings = ({ navigation }) => {
             <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor }]}>
                 <Text style={TYPOGRAPHY().H4Medium}>{title}</Text>
                 {typeof value === 'boolean' ? (
-                    <Switch value={value} />
+                    <Switch
+                        trackColor={{ false: '#767577', true: COLORS.lightBrown }}
+                        thumbColor={isSwitchEnabled ? COLORS.brown : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={isSwitchEnabled}
+                    />
                 ) : typeof value === 'string' ? (
                     <ArrowLeft width={24} height={24} color={COLORS.brown} opacity={0.8} style={{ transform: [{ rotate: '180deg' }] }} />
                 ) : (
@@ -310,6 +340,7 @@ const Settings = ({ navigation }) => {
 
     return (
         <SectionList
+            style={{ backgroundColor: COLORS.bgColor }}
             sections={sections(handlePress, navigation)}
             renderItem={({ item }) => <SettingsItem title={item.title} value={item.value} onPress={item.onPress} />}
             renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}

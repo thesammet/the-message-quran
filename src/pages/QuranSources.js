@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Linking, StyleSheet } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 const QuranMealScreen = () => {
+    const { COLORS } = useTheme();
     // Quran meal data source
     const quranMealData = [
         { language: 'Uthmani Quran Text', source: 'The Noble Qur\'an Encyclopedia', link: "https://quranenc.com/en/home" },
@@ -37,14 +39,15 @@ const QuranMealScreen = () => {
         }}
             style={{ marginBottom: 10 }}>
             <View>
-                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.language}</Text>
-                <Text style={{ fontSize: 14 }}>{item.source}</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.titleColor }}>{item.language}</Text>
+                <Text style={{ fontSize: 14, color: COLORS.subtitleColor }}>{item.source}</Text>
             </View>
         </TouchableOpacity>
     );
 
     return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={[{ backgroundColor: COLORS.bgColor },
+        styles.fullFlex]}>
             <FlatList
                 data={quranMealData}
                 renderItem={renderItem}
@@ -54,5 +57,12 @@ const QuranMealScreen = () => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    fullFlex: {
+        flex: 1,
+        alignItems: 'center'
+    }
+})
 
 export default QuranMealScreen;

@@ -20,7 +20,7 @@ const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredQuranChapters, setFilteredQuranChapters] = useState(quranChapters);
-
+    const { COLORS } = useTheme();
 
     const getDeviceLanguage = () => {
         const locales = getLocales();
@@ -84,8 +84,8 @@ const Home = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={[styles.outerContainer, { backgroundColor: COLORS.white }]}>
-            <View style={[styles.searchHeader, { backgroundColor: COLORS.brown, }]}>
+        <View style={[styles.outerContainer, { backgroundColor: COLORS.bgColor }]}>
+            <View style={[styles.searchHeader, { backgroundColor: COLORS.brown }]}>
                 <TextInput
                     placeholder="Search for a chapter.."
                     onChangeText={handleSearch}
@@ -104,21 +104,14 @@ const Home = ({ navigation }) => {
                 />
                 <Search width={32} height={32} />
             </View>
-            <View style={styles.fullFlex}>
-                <View
-                    style={styles.fullFlex}>
-                    {
-                        <FlatList
-                            data={filteredQuranChapters}
-                            renderItem={({ item }) =>
-                                <QuranChapterItem
-                                    item={item}
-                                    navigation={navigation} />}
-                            keyExtractor={(item) => item.id}
-                        />
-                    }
-                </View>
-            </View>
+            <FlatList
+                data={filteredQuranChapters}
+                renderItem={({ item }) =>
+                    <QuranChapterItem
+                        item={item}
+                        navigation={navigation} />}
+                keyExtractor={(item) => item.id}
+            />
         </View>
     );
 };

@@ -34,6 +34,7 @@
     "react-native-slider": "^0.11.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^13.9.0",
+    "react-native-tracking-transparency": "^0.1.2",
     "react-navigation": "^4.4.4"
   },
   "devDependencies": {

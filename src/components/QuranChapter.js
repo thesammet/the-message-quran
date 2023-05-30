@@ -20,7 +20,7 @@ const QuranChapterItem = React.memo(({ item, navigation }) => {
             <View style={[
                 styles.container,
                 { borderColor: COLORS.borderColor },
-                { backgroundColor: pressed ? COLORS.brown : COLORS.white },
+                { backgroundColor: pressed ? COLORS.brown : COLORS.itemBg },
             ]}>
                 <View style={styles.leftContainer}>
                     <Text style={[

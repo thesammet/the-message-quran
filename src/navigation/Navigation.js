@@ -11,10 +11,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-
     const { theme } = useContext(ThemeContext);
+    const getCurrentTheme = () => {
+        if (theme === 'light') {
+            return DefaultTheme;
+        } else {
+            return DarkTheme;
+        }
+    };
+
     return (
-        <NavigationContainer theme={theme === 'light' ? DefaultTheme : DarkTheme}>
+        <NavigationContainer theme={getCurrentTheme()}>
             <View style={styles.container}>{<Tabs />}</View>
         </NavigationContainer>
     );

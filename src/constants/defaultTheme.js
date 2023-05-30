@@ -17,7 +17,9 @@ const customDefaultTheme = {
     settingsItemBorderBottomColor: "#ccc",
     settingsItemBorderBackgroundColor: "#f5f5f5",
     shadowColor: "#000",
-    bottomSheetBackgroundColor: 'transparent'
+    bottomSheetBackgroundColor: 'transparent',
+    bgColor: '#fff',
+    itemBg: '#fff'
   },
 };
 

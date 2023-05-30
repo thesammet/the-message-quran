@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native';
 import { ThemeProvider } from './src/context/Theme';
 import { FontEditorProvider } from './src/context/FontEditor';
@@ -9,11 +9,20 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Navigation from './src/navigation/Navigation';
 import { MenuProvider } from 'react-native-popup-menu';
 import COLORS from './src/constants/color'
+import { requestTrackingPermission } from 'react-native-tracking-transparency';
 
-
+const iosTrack = async () => {
+  const trackingStatus = await requestTrackingPermission();
+  if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+    //todo: enable tracking
+  }
+}
 const App = () => {
-  return (
+  useEffect(() => {
+    Platform.OS === 'ios' && iosTrack();
+  }, []);
 
+  return (
     <SafeAreaProvider>
       <ThemeProvider>
         <FontEditorProvider>
