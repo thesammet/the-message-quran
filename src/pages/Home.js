@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { getLocales } from 'react-native-localize';
-import COLORS from '../constants/color';
 import quranChaptersBN from '../assets/source/chapters/bn.json';
 import quranChaptersEN from '../assets/source/chapters/en.json';
 import quranChaptersES from '../assets/source/chapters/es.json';
@@ -15,11 +14,13 @@ import quranChaptersZH from '../assets/source/chapters/zh.json';
 import { TextInput } from 'react-native-paper';
 import { Search } from '../components/icons';
 import QuranChapterItem from '../components/QuranChapter';
+import { useTheme } from '@react-navigation/native';
 
 const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredQuranChapters, setFilteredQuranChapters] = useState(quranChapters);
+
 
     const getDeviceLanguage = () => {
         const locales = getLocales();
@@ -83,8 +84,8 @@ const Home = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={styles.outerContainer}>
-            <View style={styles.searchHeader}>
+        <View style={[styles.outerContainer, { backgroundColor: COLORS.white }]}>
+            <View style={[styles.searchHeader, { backgroundColor: COLORS.brown, }]}>
                 <TextInput
                     placeholder="Search for a chapter.."
                     onChangeText={handleSearch}
@@ -129,54 +130,9 @@ const styles = StyleSheet.create({
     fullFlex: {
         flex: 1
     },
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderColor: '#EAEAEA',
-        padding: 16,
-        paddingLeft: 8
-    },
-    leftContainer: {
-        flex: 5,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    rightContainer: {
-        alignItems: 'flex-end',
-        flex: 2
-    },
-    header: {
-        backgroundColor: '#fff',
-        padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#EAEAEA',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#212121',
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#757575',
-
-    },
-    type: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#212121',
-        marginBottom: 4,
-    },
-    verses: {
-        fontSize: 14,
-        color: '#757575',
-    },
     searchHeader: {
         paddingVertical: 8,
         paddingHorizontal: 16,
-        backgroundColor: COLORS.brown,
         flexDirection: 'row',
         alignItems: 'center',
     },

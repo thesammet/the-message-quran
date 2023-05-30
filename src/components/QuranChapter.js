@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
+import { useTheme } from '@react-navigation/native';
 
 const QuranChapterItem = React.memo(({ item, navigation }) => {
     const [pressed, setPressed] = useState(false);
     const handleLongPress = () => {
         setPressed(true);
     };
+    const { COLORS } = useTheme();
+
     return (
         <TouchableOpacity
             onLongPress={handleLongPress}
@@ -17,18 +19,20 @@ const QuranChapterItem = React.memo(({ item, navigation }) => {
             }}>
             <View style={[
                 styles.container,
-                { backgroundColor: pressed ? COLORS.brown : 'white' },
+                { borderColor: COLORS.borderColor },
+                { backgroundColor: pressed ? COLORS.brown : COLORS.white },
             ]}>
                 <View style={styles.leftContainer}>
                     <Text style={[
                         { marginRight: item.id > 99 ? 3 : 0 },
                         styles.subtitle,
+                        { color: COLORS.subtitleColor },
                         TYPOGRAPHY().H5Regular, { textAlign: 'center', minWidth: 30 }
                     ]}>{item.id}</Text>
-                    <Text style={[styles.title, TYPOGRAPHY().H4Medium]}>{item.translation}</Text>
+                    <Text style={[styles.title, { color: COLORS.titleColor }, TYPOGRAPHY().H4Medium]}>{item.translation}</Text>
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text style={styles.verses}>{item.total_verses} verses</Text>
+                    <Text style={[styles.verses, { color: COLORS.verseColor }]}>{item.total_verses} verses</Text>
                 </View>
             </View>
         </TouchableOpacity >
@@ -42,7 +46,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderColor: '#EAEAEA',
         padding: 16,
         paddingLeft: 8
     },
@@ -58,15 +61,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#212121',
     },
     subtitle: {
         fontSize: 16,
-        color: '#757575',
     },
     verses: {
         fontSize: 14,
-        color: '#757575',
     }
 })
 

@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
+import { useTheme } from '@react-navigation/native';
 
 const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters, bottomSheetRef, func }) => {
     const { chapter } = item;
     const matchingChapter = quranChapters.find((quranChapter) => quranChapter.id === chapter);
+    const { COLORS } = useTheme();
+
     return (
         <TouchableOpacity
             onPress={() => func()}>
-            <View style={[styles.container]}>
+            <View style={[styles.container, { borderColor: COLORS.borderColor }]}>
                 <View style={styles.leftContainer}>
-                    <Text style={[styles.subtitle, TYPOGRAPHY().H6Bold]}>
+                    <Text style={[styles.subtitle, { color: COLORS.brown }, TYPOGRAPHY().H6Bold]}>
                         {item.verse}.
                     </Text>
-                    <Text style={[styles.title, TYPOGRAPHY().H5Regular]}>
+                    <Text style={[styles.title, { color: COLORS.titleColor }, TYPOGRAPHY().H5Regular]}>
                         {item.text}
                     </Text>
                     {matchingChapter && (
-                        <Text style={styles.translation}>
+                        <Text style={[styles.translation, { color: COLORS.verseColor }]}>
                             {matchingChapter.translation}
                         </Text>
                     )}
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderColor: '#EAEAEA',
         padding: 16,
         paddingLeft: 8,
     },
@@ -47,18 +48,15 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#212121',
     },
     subtitle: {
         alignSelf: 'flex-start',
         textAlign: 'left',
         fontSize: 16,
-        color: COLORS.brown,
     },
     translation: {
         alignSelf: 'flex-start',
         fontSize: 14,
-        color: '#757575',
     },
 });
 

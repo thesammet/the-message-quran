@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Home } from './icons';
-import COLORS from '../constants/color';
+import { Quran, Bookmark, Setting } from './icons';
+import { useTheme } from '@react-navigation/native';
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
+    const { COLORS } = useTheme();
+
     return (
         <View style={{ flexDirection: 'row', }}>
             {state.routes.map((route, index) => {
@@ -37,7 +39,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 };
 
                 return (
-                    <View style={{ flex: 1, borderTopWidth: .5, borderTopColor: 'transparent' }} key={index}>
+                    <View style={{ flex: 1, borderTopWidth: .5, borderTopColor: COLORS.tabbarBorderTop }} key={index}>
                         <TouchableOpacity
                             key={index}
                             accessibilityRole="button"
@@ -51,25 +53,25 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 height: 60,
-                                backgroundColor: COLORS.lightBrown,
+                                backgroundColor: COLORS.tabbarBackgroundColor
                             }}>
                             {isFocused ? (
                                 <View>
                                     {label === 'Home' && (
                                         <View style={styles.focusedTab} >
-                                            <Home width={24} height={24} color={COLORS.brown} />
+                                            <Quran width={24} height={24} fill={COLORS.brown} />
                                             <Text style={{ marginTop: 4, color: COLORS.brown }}>Home</Text>
                                         </View>
                                     )}
                                     {label === 'Saved' && (
                                         <View style={styles.focusedTab} >
-                                            <Home width={24} height={24} color={COLORS.brown} />
+                                            <Bookmark width={24} height={24} fill={COLORS.brown} />
                                             <Text style={{ marginTop: 4, color: COLORS.brown }}>Saved</Text>
                                         </View>
                                     )}
                                     {label === 'Settings' && (
                                         <View style={styles.focusedTab} >
-                                            <Home width={24} height={24} color={COLORS.brown} />
+                                            <Setting width={24} height={24} fill={COLORS.brown} />
                                             <Text style={{ marginTop: 4, color: COLORS.brown }}>Settings</Text>
                                         </View>
                                     )}
@@ -80,25 +82,25 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                     {label === 'Home' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Home width={24} height={24} color={COLORS.brown} opacity={.5} />
+                                                <Quran width={24} height={24} opacity={.7} />
                                             </View>
-                                            <Text style={{ marginTop: 4, color: COLORS.brown, opacity: .5 }}>Home</Text>
+                                            <Text style={{ marginTop: 4, opacity: .7 }}>Home</Text>
                                         </View>
                                     )}
                                     {label === 'Saved' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Home width={24} height={24} color={COLORS.brown} opacity={.5} />
+                                                <Bookmark width={24} height={24} opacity={.7} />
                                             </View>
-                                            <Text style={{ marginTop: 4, color: COLORS.brown, opacity: .5 }}>Saved</Text>
+                                            <Text style={{ marginTop: 4, opacity: .7 }}>Saved</Text>
                                         </View>
                                     )}
                                     {label === 'Settings' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Home width={24} height={24} color={COLORS.brown} opacity={.5} />
+                                                <Setting width={24} height={24} opacity={.7} />
                                             </View>
-                                            <Text style={{ marginTop: 4, color: COLORS.brown, opacity: .5 }}>Settings</Text>
+                                            <Text style={{ marginTop: 4, opacity: .7 }}>Settings</Text>
                                         </View>
                                     )}
 
@@ -106,7 +108,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                             )
                             }
                         </TouchableOpacity>
-                    </View>
+                    </View >
                 );
             })}
         </View >

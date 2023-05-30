@@ -12,7 +12,6 @@ import COLORS from './src/constants/color'
 
 
 const App = () => {
-
   return (
 
     <SafeAreaProvider>
@@ -21,12 +20,16 @@ const App = () => {
           <ChapterSaverProvider>
             <VerseSaveProvider>
               {Platform.OS != 'ios' ? null : (
-                <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.brown }} />
+                <SafeAreaView style={{
+                  flex: 0,
+                  backgroundColor: COLORS.brown
+                }} />
               )}
               <SafeAreaView
                 style={{
                   flex: 1,
-                  backgroundColor: Platform.OS != 'ios' ? '#00AAFF' : 'white',
+                  backgroundColor: Platform.OS != 'ios'
+                    ? COLORS.safeAreaViewIOSColor : COLORS.white,
                 }}>
                 <MenuProvider>
                   <Navigation />

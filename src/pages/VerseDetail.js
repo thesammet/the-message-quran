@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, } from 'react-native';
 import { getLocales } from 'react-native-localize';
-import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
 import quranVersesBN from '../assets/source/editions/bn.json';
 import quranVersesEN from '../assets/source/editions/en.json';
@@ -17,6 +16,7 @@ import { ArrowLeft, SaveFillWhite, SaveWhite } from '../components/icons';
 import { ChapterSaverContext } from '../context/ChapterSave';
 import { VerseSaveContext } from '../context/VerseSave';
 import BottomSheet from "react-native-gesture-bottom-sheet";
+import { useTheme } from '@react-navigation/native';
 
 const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
@@ -28,6 +28,7 @@ const VerseDetail = ({ navigation, route }) => {
   const { savedVerses, addSavedVerse, removeSavedVerse } = useContext(VerseSaveContext);
   const bottomSheet = useRef();
   const [saveText, setSaveText] = useState(null)
+  const { COLORS } = useTheme();
 
   const handleSearch = (text) => {
     const formattedQuery = text.toLowerCase();
@@ -111,10 +112,11 @@ const VerseDetail = ({ navigation, route }) => {
         changeSaveStatus(item)
       }}>
         <View style={[
-          styles.container
+          styles.container,
+          { borderColor: COLORS.borderColor, }
         ]}>
           <View style={styles.leftContainer}>
-            <Text style={[styles.subtitle, TYPOGRAPHY().H6Bold]}>{item.verse}.</Text>
+            <Text style={[styles.subtitle, { color: COLORS.brown, }, TYPOGRAPHY().H6Bold]}>{item.verse}.</Text>
             <Text style={[styles.title, TYPOGRAPHY().H5Regular]}>{item.text}</Text>
           </View>
         </View>
@@ -138,7 +140,7 @@ const VerseDetail = ({ navigation, route }) => {
         height={300}
         radius={24}
         sheetBackgroundColor={COLORS.lightBrown}
-        backgroundColor={'transparent'}
+        backgroundColor={COLORS.bottomSheetBackgroundColor}
         draggable={true} >
         <View style={styles.bottomSheetContent}>
           <View style={styles.bottomSheetInnerContent}>
@@ -172,16 +174,16 @@ const VerseDetail = ({ navigation, route }) => {
               borderRadius: 16,
               paddingVertical: 8
             }}>
-            <Text style={[styles.title, { color: COLORS.white }]}>CLOSE</Text>
+            <Text style={[styles.title, { color: COLORS.titleColor }]}>CLOSE</Text>
           </TouchableOpacity>
         </View>
       </BottomSheet>
       <View
-        style={styles.navbackContainer}>
+        style={[styles.navbackContainer, { backgroundColor: COLORS.brown, shadowColor: COLORS.shadowColor, }]}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}>
-          <ArrowLeft width={28} height={28} color="white" />
+          <ArrowLeft width={28} height={28} color={COLORS.white} />
         </TouchableOpacity>
         <Text
           style={[TYPOGRAPHY().H4Regular, { color: COLORS.white }]}>
@@ -239,7 +241,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: '#EAEAEA',
     padding: 16,
     paddingLeft: 8
   },
@@ -250,21 +251,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#212121',
   },
   subtitle: {
     fontSize: 16,
-    color: COLORS.brown,
   },
   navbackContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.brown,
     paddingTop: 10,
     paddingBottom: 12,
     paddingHorizontal: 16,
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,

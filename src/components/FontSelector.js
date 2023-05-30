@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import COLORS from '../constants/color';
 import TYPOGRAPHY from '../constants/typography';
 import { useContext } from 'react';
 import { FontEditorContext } from '../context/FontEditor';
+import { useTheme } from '@react-navigation/native';
 
 const FontSelector = ({ onValueChange }) => {
   const { size, updateSize } = useContext(FontEditorContext);
+  const { COLORS } = useTheme();
+
   return (
     <View style={styles.container}>
       <View style={styles.valuesContainer}>

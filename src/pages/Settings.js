@@ -15,6 +15,7 @@ import { ArrowLeft } from '../components/icons';
 import FontSelector from '../components/FontSelector';
 import TYPOGRAPHY from '../constants/typography';
 import { getLocales } from 'react-native-localize';
+import { useTheme } from '@react-navigation/native';
 
 const sections = (press, navigation) => [
     {
@@ -259,6 +260,7 @@ const handleMailTo = async (email, subject, body) => {
 };
 
 const Settings = ({ navigation }) => {
+    const { COLORS } = useTheme();
     const handlePress = useCallback(async (url) => {
         const supported = await Linking.canOpenURL(url);
 
@@ -272,7 +274,7 @@ const Settings = ({ navigation }) => {
     const SettingsItem = ({ title, value, onPress }) => (
         onPress ? (
             <TouchableOpacity onPress={onPress}>
-                <View style={styles.item}>
+                <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor, }]}>
                     <Text style={TYPOGRAPHY().H4Medium}>{title}</Text>
                     {typeof value === 'boolean' ? (
                         <Switch value={value} />
@@ -284,7 +286,7 @@ const Settings = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
         ) : (
-            <View style={styles.item}>
+            <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor }]}>
                 <Text style={TYPOGRAPHY().H4Medium}>{title}</Text>
                 {typeof value === 'boolean' ? (
                     <Switch value={value} />
@@ -298,7 +300,10 @@ const Settings = ({ navigation }) => {
     );
 
     const SectionHeader = ({ title }) => (
-        <View style={styles.sectionHeader}>
+        <View style={[styles.sectionHeader, {
+            backgroundColor: COLORS.settingsItemBorderBackgroundColor,
+            borderBottomColor: COLORS.settingsItemBorderBottomColor
+        }]}>
             <Text style={[styles.sectionTitle, TYPOGRAPHY().H4Medium]}>{title}</Text>
         </View>
     );
@@ -319,24 +324,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 16,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#ccc',
-    },
-    value: {
-        fontSize: 16,
-        color: '#888',
-    },
-    actionText: {
-        fontSize: 16,
-        color: 'blue',
-        marginLeft: 8,
     },
     sectionHeader: {
-        backgroundColor: '#f5f5f5',
         opacity: 0.5,
         paddingVertical: 8,
         paddingHorizontal: 16,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#ccc',
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 24,

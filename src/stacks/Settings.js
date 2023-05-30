@@ -4,16 +4,18 @@ import FlashMessage from 'react-native-flash-message';
 import Settings from '../pages/Settings';
 import QuranSources from '../pages/QuranSources';
 import { View, Text, TouchableOpacity } from 'react-native';
-import COLORS from '../constants/color';
 import { ArrowLeft } from '../components/icons';
+import { useTheme } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
 const SettingsStack = ({ navigation }) => {
+    const { COLORS } = useTheme();
+
     const QuranSourcesScreen = () => {
         return (
             <View style={{ flex: 1, alignItems: 'center', backgroundColor: COLORS.brown }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 10, color: 'white' }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 10, color: COLORS.white }}>
                     Quran Sources
                 </Text>
                 {/* Your content goes here */}
@@ -36,7 +38,7 @@ const SettingsStack = ({ navigation }) => {
                         options={{
                             headerTitle: null,
                             headerStyle: { backgroundColor: COLORS.brown },
-                            headerTintColor: 'white',
+                            headerTintColor: COLORS.white,
                             headerLeft: () =>
                                 <TouchableOpacity
                                     onPress={() => {

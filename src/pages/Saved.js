@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import TYPOGRAPHY from '../constants/typography';
-import COLORS from '../constants/color';
 import { getLocales } from 'react-native-localize';
 import { ChapterSaverContext } from '../context/ChapterSave';
 import { VerseSaveContext } from '../context/VerseSave';
@@ -30,6 +29,7 @@ import QuranChapterItem from '../components/QuranChapter';
 import SavedQuranVerseItem from '../components/SavedQuranVerseItem';
 import { Quran } from '../image/index';
 import BottomSheet from "react-native-gesture-bottom-sheet";
+import { useTheme } from '@react-navigation/native';
 
 const Saved = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
@@ -41,6 +41,7 @@ const Saved = ({ navigation }) => {
     const bottomSheetRef = useRef();
     const [saveText, setSaveText] = useState(null)
     const [selectedItem, setSelectedItem] = useState(true);
+    const { COLORS } = useTheme();
 
     const getDeviceLanguage = () => {
         const locales = getLocales();
@@ -162,7 +163,7 @@ const Saved = ({ navigation }) => {
             {
                 (filteredChapters.length == 0 ?
                     <View>
-                        <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>No Saved Chapter</Text>
+                        <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>No Saved Chapter</Text>
                         <Image source={Quran}
                             style={{
                                 height: 145,
@@ -188,7 +189,7 @@ const Saved = ({ navigation }) => {
         <View style={styles.fullFlex}>
             {filteredVerses.length === 0 ? (
                 <View>
-                    <Text style={[styles.noText, TYPOGRAPHY.apply().H4Bold]}>
+                    <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>
                         No Saved Verse
                     </Text>
                     <Image
@@ -293,7 +294,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     noText: {
-        color: COLORS.brown,
         textAlign: 'center',
         marginTop: 64
     },
