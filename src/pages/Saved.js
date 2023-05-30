@@ -260,7 +260,7 @@ const Saved = ({ navigation }) => {
                     </View>
                     <TouchableOpacity
                         onPress={() => {
-                            bottomSheet.current.close()
+                            bottomSheetRef.current.close()
                         }}
                         style={{
                             backgroundColor: COLORS.brown,

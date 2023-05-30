@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Time } from '../components/icons';
 import FlashMessage from 'react-native-flash-message';
 import CustomTabBar from '../components/CustomTabBar';
+import SettingsStack from '../stacks/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,8 +35,8 @@ const Tabs = () => {
                     }}
                 />
                 <Tab.Screen
-                    name="Settings"
-                    component={Settings}
+                    name="SettingsStack"
+                    component={SettingsStack}
                     options={{
                         title: 'Settings',
                         headerShown: false,
