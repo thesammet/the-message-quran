@@ -10,7 +10,12 @@ const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters, botto
 
     return (
         <TouchableOpacity
-            onPress={() => func()}>
+            onPress={() => navigation.navigate('VerseDetail', {
+                chapter: matchingChapter.id,
+                chapter_name: matchingChapter.translation,
+                chapter_total_verses: matchingChapter.total_verses,
+                moved_item: item.verse
+            })}>
             <View style={[styles.container, { borderColor: COLORS.borderColor }]}>
                 <View style={styles.leftContainer}>
                     <Text style={[styles.subtitle, { color: COLORS.brown }, TYPOGRAPHY().H6Bold]}>

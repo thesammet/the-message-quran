@@ -19,7 +19,13 @@ const customDefaultTheme = {
     shadowColor: "#000",
     bottomSheetBackgroundColor: 'transparent',
     bgColor: '#fff',
-    itemBg: '#fff'
+    itemBg: '#fff',
+    settingsItemTextColor: "#333232",
+    tabbarTitleColor: "#000",
+    tabbarPaleTitleColor: "#454545",
+    tabbarIconColor: "#b07a1a",
+    tabbarPaleIconColor: "#454545",
+    verseAmountText: "#dddddd"
   },
 };
 

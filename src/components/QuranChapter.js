@@ -15,7 +15,12 @@ const QuranChapterItem = React.memo(({ item, navigation }) => {
             onLongPress={handleLongPress}
             onPressOut={() => setPressed(false)}
             onPress={() => {
-                navigation.navigate('VerseDetail', { chapter: item.id, chapter_name: item.translation })
+                navigation.navigate('VerseDetail', {
+                    chapter: item.id,
+                    chapter_name: item.translation,
+                    chapter_total_verses: item.total_verses,
+                    moved_item: 1
+                })
             }}>
             <View style={[
                 styles.container,

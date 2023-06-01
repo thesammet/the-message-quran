@@ -13,7 +13,8 @@ const QuranVerseItem = React.memo(({ item, navigation }) => {
         }}>
             <View style={[
                 styles.container,
-                { borderColor: COLORS.borderColor }
+                { borderColor: COLORS.borderColor },
+                { backgroundColor: COLORS.itemBg },
             ]}>
                 <View style={styles.leftContainer}>
                     <Text style={[styles.subtitle, { color: COLORS.brown }, TYPOGRAPHY().H6Bold]}>{item.verse}.</Text>

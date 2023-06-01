@@ -293,7 +293,7 @@ const Settings = ({ navigation }) => {
         onPress ? (
             <TouchableOpacity onPress={onPress}>
                 <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor, }]}>
-                    <Text style={TYPOGRAPHY().H4Medium}>{title}</Text>
+                    <Text style={[TYPOGRAPHY().H4Medium, { color: COLORS.titleColor }]}>{title}</Text>
                     {typeof value === 'boolean' ? (
                         <Switch
                             trackColor={{ false: '#767577', true: COLORS.lightBrown }}
@@ -311,7 +311,7 @@ const Settings = ({ navigation }) => {
             </TouchableOpacity>
         ) : (
             <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor }]}>
-                <Text style={TYPOGRAPHY().H4Medium}>{title}</Text>
+                <Text style={[TYPOGRAPHY().H4Medium, { color: COLORS.titleColor }]}>{title}</Text>
                 {typeof value === 'boolean' ? (
                     <Switch
                         trackColor={{ false: '#767577', true: COLORS.lightBrown }}
@@ -334,7 +334,7 @@ const Settings = ({ navigation }) => {
             backgroundColor: COLORS.settingsItemBorderBackgroundColor,
             borderBottomColor: COLORS.settingsItemBorderBottomColor
         }]}>
-            <Text style={[styles.sectionTitle, TYPOGRAPHY().H4Medium]}>{title}</Text>
+            <Text style={[styles.sectionTitle, { color: COLORS.settingsItemTextColor }, TYPOGRAPHY().H4Medium]}>{title}</Text>
         </View>
     );
 

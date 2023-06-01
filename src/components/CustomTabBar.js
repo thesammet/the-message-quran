@@ -59,20 +59,20 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                 <View>
                                     {label === 'Home' && (
                                         <View style={styles.focusedTab} >
-                                            <Quran width={24} height={24} fill={COLORS.brown} />
-                                            <Text style={{ marginTop: 4, color: COLORS.brown }}>Home</Text>
+                                            <Quran width={24} height={24} fill={COLORS.tabbarIconColor} />
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>Home</Text>
                                         </View>
                                     )}
                                     {label === 'Saved' && (
                                         <View style={styles.focusedTab} >
-                                            <Bookmark width={24} height={24} fill={COLORS.brown} />
-                                            <Text style={{ marginTop: 4, color: COLORS.brown }}>Saved</Text>
+                                            <Bookmark width={24} height={24} fill={COLORS.tabbarIconColor} />
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>Saved</Text>
                                         </View>
                                     )}
                                     {label === 'Settings' && (
                                         <View style={styles.focusedTab} >
-                                            <Setting width={24} height={24} fill={COLORS.brown} />
-                                            <Text style={{ marginTop: 4, color: COLORS.brown }}>Settings</Text>
+                                            <Setting width={24} height={24} fill={COLORS.tabbarIconColor} />
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>Settings</Text>
                                         </View>
                                     )}
 
@@ -82,25 +82,25 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                                     {label === 'Home' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Quran width={24} height={24} opacity={.7} />
+                                                <Quran width={24} height={24} fill={COLORS.tabbarPaleIconColor} />
                                             </View>
-                                            <Text style={{ marginTop: 4, opacity: .7 }}>Home</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>Home</Text>
                                         </View>
                                     )}
                                     {label === 'Saved' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Bookmark width={24} height={24} opacity={.7} />
+                                                <Bookmark width={24} height={24} fill={COLORS.tabbarPaleIconColor} />
                                             </View>
-                                            <Text style={{ marginTop: 4, opacity: .7 }}>Saved</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>Saved</Text>
                                         </View>
                                     )}
                                     {label === 'Settings' && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
-                                                <Setting width={24} height={24} opacity={.7} />
+                                                <Setting width={24} height={24} fill={COLORS.tabbarPaleIconColor} />
                                             </View>
-                                            <Text style={{ marginTop: 4, opacity: .7 }}>Settings</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>Settings</Text>
                                         </View>
                                     )}
 

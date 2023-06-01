@@ -97,12 +97,24 @@ const VerseDetail = ({ navigation, route }) => {
     setFilteredQuranVerses(verses[route.params.chapter])
   };
 
+  const flatListRef = useRef(null);
+
   useEffect(() => {
     const deviceLanguage = getDeviceLanguage();
     handleLangChange(deviceLanguage)
     const isSaved = savedChapter.includes(route.params.chapter.toString())
     setSaveStatus(isSaved)
   }, []);
+
+  useEffect(() => {
+    const initialIndex = route.params.moved_item - 1
+    if (flatListRef?.current) {
+      flatListRef?.current.scrollToIndex({
+        index: initialIndex,
+        animated: true
+      })
+    }
+  }, [filteredQuranVerses])
 
   const QuranVerseItem = React.memo(({ item }) => {
     return (
@@ -113,11 +125,12 @@ const VerseDetail = ({ navigation, route }) => {
       }}>
         <View style={[
           styles.container,
-          { borderColor: COLORS.borderColor, }
+          { borderColor: COLORS.borderColor, },
+          { backgroundColor: COLORS.itemBg },
         ]}>
           <View style={styles.leftContainer}>
             <Text style={[styles.subtitle, { color: COLORS.brown, }, TYPOGRAPHY().H6Bold]}>{item.verse}.</Text>
-            <Text style={[styles.title, TYPOGRAPHY().H5Regular]}>{item.text}</Text>
+            <Text style={[styles.title, { color: COLORS.titleColor }, TYPOGRAPHY().H5Regular]}>{item.text}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -185,10 +198,16 @@ const VerseDetail = ({ navigation, route }) => {
           activeOpacity={0.8}>
           <ArrowLeft width={28} height={28} color={COLORS.white} />
         </TouchableOpacity>
-        <Text
-          style={[TYPOGRAPHY().H4Regular, { color: COLORS.white }]}>
-          {route.params.chapter_name}
-        </Text>
+        <View style={styles.headerCenter}>
+          <Text
+            style={[TYPOGRAPHY().H4Regular, { color: COLORS.white }]}>
+            {route.params.chapter_name}
+          </Text>
+          <Text
+            style={[TYPOGRAPHY().H6Medium, { color: COLORS.verseAmountText }]}>
+            {route.params.chapter_total_verses} verses
+          </Text>
+        </View>
         <TouchableOpacity onPress={() => {
           if (!saveStatus) {
             addValueSavedChapter(route.params.chapter.toString())
@@ -213,18 +232,23 @@ const VerseDetail = ({ navigation, route }) => {
         mode="flat"
         activeUnderlineColor={COLORS.brown}
       /> */}
-      <View style={styles.fullFlex}>
-        <View
-          style={styles.fullFlex}>
-          {
-            <FlatList
-              data={filteredQuranVerses}
-              renderItem={({ item }) => <QuranVerseItem item={item} />}
-              keyExtractor={(item) => item.verse}
-            />
-          }
-        </View>
-      </View>
+
+
+      {
+        filteredQuranVerses.length > 0 ?
+          <FlatList
+            ref={flatListRef}
+            data={filteredQuranVerses}
+            renderItem={({ item }) => <QuranVerseItem item={item} />}
+            keyExtractor={(item) => item.verse}
+            onScrollToIndexFailed={info => {
+              const wait = new Promise(resolve => setTimeout(resolve, 500));
+              wait.then(() => {
+                flatListRef.current?.scrollToIndex({ index: info.index, animated: true });
+              });
+            }}
+          />
+          : <Text>ASDF</Text>}
     </View>
   );
 };
@@ -283,6 +307,9 @@ const styles = StyleSheet.create({
   },
   bottomSheetSubTitle: {
     marginVertical: 8
+  },
+  headerCenter: {
+    alignItems: 'center'
   }
 })
 export default VerseDetail;

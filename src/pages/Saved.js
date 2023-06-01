@@ -212,8 +212,15 @@ const Saved = ({ navigation }) => {
                             quranChapters={quranChapters}
                             bottomSheetRef={bottomSheetRef}
                             func={() => {
-                                setSelectedItem(item);
-                                bottomSheetRef.current.show();
+                                /*  setSelectedItem(item);
+                                 bottomSheetRef.current.show(); 
+                                */
+                                navigation.navigate('VerseDetail', {
+                                    chapter: item.id,
+                                    chapter_name: item.translation,
+                                    chapter_total_verses: item.total_verses,
+                                    moved_item: item.verse
+                                })
                             }}
                         />
                     )}
