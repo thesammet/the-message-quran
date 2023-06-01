@@ -427,6 +427,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.18.1):
     - React-Core
+  - RNCClipboard (1.11.2):
+    - React-Core
   - RNDeviceInfo (10.6.0):
     - React-Core
   - RNGestureHandler (2.10.0):
@@ -534,6 +536,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeLocalization (from `../node_modules/react-native-localization`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
@@ -637,6 +640,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localization"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
@@ -704,6 +709,7 @@ SPEC CHECKSUMS:
   ReactCommon: dbfbe2f7f3c5ce4ce44f43f2fd0d5950d1eb67c5
   ReactNativeLocalization: 076497d7ca70341c751cd3b3e7c86187332a182d
   RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
+  RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNDeviceInfo: 475a4c447168d0ad4c807e48ef5e0963a0f4eb1b
   RNGestureHandler: e145476da655f3dbc48ef2f0a08cf7a34338c02b
   RNLocalize: 5944c97d2fe8150913a51ddd5eab4e23a82bd80d

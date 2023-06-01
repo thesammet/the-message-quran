@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Share } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import TYPOGRAPHY from '../constants/typography';
 import quranVersesBN from '../assets/source/editions/bn.json';
@@ -17,6 +17,7 @@ import { ChapterSaverContext } from '../context/ChapterSave';
 import { VerseSaveContext } from '../context/VerseSave';
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import { useTheme } from '@react-navigation/native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
@@ -97,6 +98,10 @@ const VerseDetail = ({ navigation, route }) => {
     setFilteredQuranVerses(verses[route.params.chapter])
   };
 
+  const copyToClipboard = (text) => {
+    Clipboard.setString(text);
+  };
+
   const flatListRef = useRef(null);
 
   useEffect(() => {
@@ -145,6 +150,25 @@ const VerseDetail = ({ navigation, route }) => {
     )
   });
 
+  const onShare = async (content) => {
+    try {
+      const result = await Share.share({
+        message: content,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <View style={[styles.outerContainer, { backgroundColor: COLORS.bgColor }]}>
       <BottomSheet
@@ -160,10 +184,26 @@ const VerseDetail = ({ navigation, route }) => {
             <Text style={styles.title}>OPTIONS</Text>
             <BottomSheetItem
               title={"Share"}
-              func={() => { console.log("a") }}></BottomSheetItem>
+              func={() => {
+                const appName = "The Message - Quran";
+                const chapter = route.params.chapter_name;
+                const verse = selectedItem?.text
+                const chapterVerseCount = selectedItem?.chapter;
+                const verseCount = selectedItem?.verse;
+                const textToShare = `${appName} uygulamasıyla paylaşıyorum.\n\nSure: ${chapter} (${chapterVerseCount}. ayet)\nKuran Ayeti: ${verse} (${verseCount}. ayet)`;
+                onShare(textToShare)
+              }}></BottomSheetItem>
             <BottomSheetItem
               title={"Copy"}
-              func={() => { console.log("a") }}></BottomSheetItem>
+              func={() => {
+                const chapter = route.params.chapter_name;
+                const verse = selectedItem?.text
+                const chapterVerseCount = selectedItem?.chapter;
+                const verseCount = selectedItem?.verse;
+                const textToShare = `Sure: ${chapter} (${chapterVerseCount}. ayet)\nKuran Ayeti: ${verse} (${verseCount}. ayet)`;
+
+                copyToClipboard(textToShare)
+              }}></BottomSheetItem>
             <BottomSheetItem
               title={!saveText ? "Save" : "Unsave"}
               func={() => {
