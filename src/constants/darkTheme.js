@@ -25,7 +25,8 @@ const customDarkTheme = {
         tabbarPaleTitleColor: "#7a7a7a",
         tabbarIconColor: "#b07a1a",
         tabbarPaleIconColor: "#7a7a7a",
-        verseAmountText: "#dddddd"
+        verseAmountText: "#dddddd",
+        disabledItem: "#4f4d4d"
     },
 };
 

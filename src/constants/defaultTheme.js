@@ -25,7 +25,8 @@ const customDefaultTheme = {
     tabbarPaleTitleColor: "#454545",
     tabbarIconColor: "#b07a1a",
     tabbarPaleIconColor: "#454545",
-    verseAmountText: "#dddddd"
+    verseAmountText: "#dddddd",
+    disabledItem: "#b5b5b5"
   },
 };
 

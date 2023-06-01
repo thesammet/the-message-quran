@@ -18,17 +18,18 @@ import { VerseSaveContext } from '../context/VerseSave';
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import { useTheme } from '@react-navigation/native';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { BookmarkContext } from '../context/Bookmark';
 
 const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuranVerses, setFilteredQuranVerses] = useState(quranVerses);
-  const [saveStatus, setSaveStatus] = useState(null)
+  const [saveStatus, setSaveStatus] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const { savedChapter, addValueSavedChapter, removeValueSavedChapter } = useContext(ChapterSaverContext);
   const { savedVerses, addSavedVerse, removeSavedVerse } = useContext(VerseSaveContext);
   const bottomSheet = useRef();
-  const [saveText, setSaveText] = useState(null)
+  const [saveText, setSaveText] = useState(null);
   const { COLORS } = useTheme();
 
   const handleSearch = (text) => {
@@ -119,7 +120,7 @@ const VerseDetail = ({ navigation, route }) => {
         animated: true
       })
     }
-  }, [filteredQuranVerses])
+  }, [filteredQuranVerses, route.params.moved_item])
 
   const QuranVerseItem = React.memo(({ item }) => {
     return (
@@ -168,6 +169,7 @@ const VerseDetail = ({ navigation, route }) => {
       console.log(error.message);
     }
   };
+  const { saveBookmark } = useContext(BookmarkContext);
 
   return (
     <View style={[styles.outerContainer, { backgroundColor: COLORS.bgColor }]}>
@@ -214,7 +216,14 @@ const VerseDetail = ({ navigation, route }) => {
               }}></BottomSheetItem>
             <BottomSheetItem
               title={"Bookmark"}
-              func={() => { console.log("a") }}></BottomSheetItem>
+              func={() => {
+                saveBookmark({
+                  chapter: selectedItem?.chapter,
+                  chapter_name: route.params.chapter_name,
+                  chapter_total_verses: route.params.chapter_total_verses,
+                  moved_item: selectedItem?.verse
+                })
+              }}></BottomSheetItem>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -275,7 +284,7 @@ const VerseDetail = ({ navigation, route }) => {
 
 
       {
-        filteredQuranVerses.length > 0 ?
+        filteredQuranVerses && filteredQuranVerses.length > 0 ?
           <FlatList
             ref={flatListRef}
             data={filteredQuranVerses}

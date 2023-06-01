@@ -17,8 +17,9 @@ import TYPOGRAPHY from '../constants/typography';
 import { getLocales } from 'react-native-localize';
 import { useTheme } from '@react-navigation/native';
 import { ThemeContext } from '../context/Theme';
+import { BookmarkContext } from '../context/Bookmark';
 
-const sections = (press, navigation) => [
+const sections = (press, navigation, bookmarkNavigate) => [
     {
         title: 'Preferences',
         data: [
@@ -37,8 +38,13 @@ const sections = (press, navigation) => [
         ],
     },
     {
-        title: 'About',
+        title: 'Font Selection',
+        data: [{ title: '', value: 1 }],
+    },
+    {
+        title: 'App',
         data: [
+            { title: 'Bookmark', value: 'x', onPress: () => bookmarkNavigate() },
             { title: 'Quran Sources', value: 'x', onPress: () => navigation.navigate('QuranSources') },
             {
                 title: 'Rate the App',
@@ -61,11 +67,7 @@ const sections = (press, navigation) => [
                         ''),
             },
         ],
-    },
-    {
-        title: 'Font Selection',
-        data: [{ title: '', value: 1 }],
-    },
+    }
 ];
 
 const shareMessage = (lang) => {
@@ -263,6 +265,7 @@ const handleMailTo = async (email, subject, body) => {
 const Settings = ({ navigation }) => {
     const { COLORS } = useTheme();
     const { theme, changeTheme } = useContext(ThemeContext);
+    const { bookmark } = useContext(BookmarkContext);
     const [isSwitchEnabled, setIsSwitchEnabled] = useState(false);
     const toggleSwitch = () => {
         setIsSwitchEnabled(previousState => !previousState);
@@ -279,26 +282,31 @@ const Settings = ({ navigation }) => {
         }
     }, []);
 
-    const changeMode = (async (url) => {
-        const supported = await Linking.canOpenURL(url);
-
-        if (supported) {
-            await Linking.openURL(url);
-        } else {
-            Alert.alert(`Don't know how to open this URL: ${url}`);
-        }
-    }, []);
+    const bookmarkNavigate = () => {
+        console.log(bookmark)
+        navigation.navigate('VerseDetail', bookmark.chapter)
+    }
 
     useEffect(() => {
-        console.log(theme)
         setIsSwitchEnabled(theme == 'light' ? false : true)
     }, []);
 
     const SettingsItem = ({ title, value, onPress }) => (
         onPress ? (
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={title == "Bookmark" ?
+                bookmark ?
+                    onPress :
+                    console.log("a") :
+                onPress}>
                 <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor, }]}>
-                    <Text style={[TYPOGRAPHY().H4Medium, { color: COLORS.titleColor }]}>{title}</Text>
+                    <Text style={[TYPOGRAPHY().H4Medium, {
+                        color:
+                            title == "Bookmark" ?
+                                bookmark ?
+                                    COLORS.titleColor :
+                                    COLORS.disabledItem :
+                                COLORS.titleColor
+                    }]}>{title}</Text>
                     {typeof value === 'boolean' ? (
                         <Switch
                             trackColor={{ false: '#767577', true: COLORS.lightBrown }}
@@ -346,7 +354,7 @@ const Settings = ({ navigation }) => {
     return (
         <SectionList
             style={{ backgroundColor: COLORS.bgColor }}
-            sections={sections(handlePress, navigation)}
+            sections={sections(handlePress, navigation, bookmarkNavigate)}
             renderItem={({ item }) => <SettingsItem title={item.title} value={item.value} onPress={item.onPress} />}
             renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
         />
