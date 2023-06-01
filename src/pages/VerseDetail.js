@@ -248,7 +248,7 @@ const VerseDetail = ({ navigation, route }) => {
               });
             }}
           />
-          : <Text>ASDF</Text>}
+          : <Text>NO DATA</Text>}
     </View>
   );
 };

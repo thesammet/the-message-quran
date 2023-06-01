@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -287,6 +287,11 @@ const Settings = ({ navigation }) => {
         } else {
             Alert.alert(`Don't know how to open this URL: ${url}`);
         }
+    }, []);
+
+    useEffect(() => {
+        console.log(theme)
+        setIsSwitchEnabled(theme == 'light' ? false : true)
     }, []);
 
     const SettingsItem = ({ title, value, onPress }) => (
