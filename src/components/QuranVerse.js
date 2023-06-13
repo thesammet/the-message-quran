@@ -10,7 +10,8 @@ const QuranVerseItem = React.memo(({ item, navigation }) => {
         <TouchableOpacity onPress={() => {
             setSelectedItem(item);
             bottomSheet.current.show()
-        }}>
+        }}
+            activeOpacity={.6}>
             <View style={[
                 styles.container,
                 { borderColor: COLORS.borderColor },

@@ -296,17 +296,26 @@ const Settings = ({ navigation }) => {
             <TouchableOpacity onPress={title == "Bookmark" ?
                 bookmark ?
                     onPress :
-                    console.log("a") :
-                onPress}>
+                    console.log("there is no bookmark") :
+                onPress}
+                activeOpacity={.6}>
                 <View style={[styles.item, { borderBottomColor: COLORS.settingsItemBorderBottomColor, }]}>
-                    <Text style={[TYPOGRAPHY().H4Medium, {
-                        color:
-                            title == "Bookmark" ?
-                                bookmark ?
-                                    COLORS.titleColor :
-                                    COLORS.disabledItem :
-                                COLORS.titleColor
-                    }]}>{title}</Text>
+                    <View>
+                        <Text style={[TYPOGRAPHY().H4Medium, {
+                            color:
+                                title == "Bookmark" ?
+                                    bookmark ?
+                                        COLORS.titleColor :
+                                        COLORS.disabledItem :
+                                    COLORS.titleColor
+                        }]}>{title}</Text>
+                        {title == "Bookmark" ?
+                            !bookmark ?
+                                <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.disabledItem }]}>{"(No saved bookmark.)"}</Text> :
+                                <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.subtitleColor }]}>{bookmark.chapter.chapter_name + " " + bookmark.chapter.moved_item + ". verse"}</Text>
+                            :
+                            null}
+                    </View>
                     {typeof value === 'boolean' ? (
                         <Switch
                             trackColor={{ false: '#767577', true: COLORS.lightBrown }}

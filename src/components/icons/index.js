@@ -1,5 +1,6 @@
 export { default as ArrowLeft } from "./ArrowLeft";
 export { default as Bookmark } from "./Bookmark";
+export { default as Cross } from "./Cross";
 export { default as Home } from "./Home";
 export { default as Quran } from "./Quran";
 export { default as SaveFillWhite } from "./SaveFillWhite";

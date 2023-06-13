@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { FontEditorContext } from '../context/FontEditor';
 import { useTheme } from '@react-navigation/native';
 
-const FontSelector = ({ onValueChange }) => {
+const FontSelector = () => {
   const { size, updateSize } = useContext(FontEditorContext);
   const { COLORS } = useTheme();
 

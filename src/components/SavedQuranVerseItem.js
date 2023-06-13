@@ -15,20 +15,28 @@ const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters, botto
                 chapter_name: matchingChapter.translation,
                 chapter_total_verses: matchingChapter.total_verses,
                 moved_item: item.verse
-            })}>
+            })}
+            activeOpacity={.6}>
             <View style={[styles.container, { borderColor: COLORS.borderColor }]}>
                 <View style={styles.leftContainer}>
-                    <Text style={[styles.subtitle, { color: COLORS.brown }, TYPOGRAPHY().H6Bold]}>
-                        {item.verse}.
-                    </Text>
-                    <Text style={[styles.title, { color: COLORS.titleColor }, TYPOGRAPHY().H5Regular]}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flex: 1
+                    }}>
+                        <Text style={[styles.subtitle, { color: COLORS.brown }, TYPOGRAPHY().H5Regular]}>
+                            {item.verse}. verse -
+                        </Text>
+                        {matchingChapter && (
+                            <Text style={[TYPOGRAPHY().H5Regular, { color: COLORS.verseColor }]}>
+                                {" " + matchingChapter.translation}
+                            </Text>
+                        )}
+                    </View>
+                    <Text style={[{ color: COLORS.titleColor }, TYPOGRAPHY().H5Medium]}>
                         {item.text}
                     </Text>
-                    {matchingChapter && (
-                        <Text style={[styles.translation, { color: COLORS.verseColor }]}>
-                            {matchingChapter.translation}
-                        </Text>
-                    )}
                 </View>
             </View>
         </TouchableOpacity>
@@ -45,24 +53,11 @@ const styles = StyleSheet.create({
         paddingLeft: 8,
     },
     leftContainer: {
-        flex: 5,
+        flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
-    },
-    title: {
-        alignSelf: 'flex-start',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    subtitle: {
-        alignSelf: 'flex-start',
-        textAlign: 'left',
-        fontSize: 16,
-    },
-    translation: {
-        alignSelf: 'flex-start',
-        fontSize: 14,
-    },
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+    }
 });
 
 export default SavedQuranVerseItem;

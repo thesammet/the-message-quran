@@ -12,7 +12,7 @@ const customDefaultTheme = {
     tabbarBackgroundColor: '#fffbf2',
     borderColor: "#EAEAEA",
     titleColor: "#212121",
-    subtitleColor: "#757575",
+    subtitleColor: "#b07a1a",
     verseColor: "#757575",
     settingsItemBorderBottomColor: "#ccc",
     settingsItemBorderBackgroundColor: "#f5f5f5",

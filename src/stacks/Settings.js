@@ -11,17 +11,6 @@ const Stack = createNativeStackNavigator();
 
 const SettingsStack = ({ navigation }) => {
     const { COLORS } = useTheme();
-
-    const QuranSourcesScreen = () => {
-        return (
-            <View style={{ flex: 1, alignItems: 'center', backgroundColor: COLORS.brown }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 10, color: COLORS.white }}>
-                    Quran Sources
-                </Text>
-                {/* Your content goes here */}
-            </View>
-        );
-    };
     return (
         <>
             <FlashMessage position="bottom" floating={true} />

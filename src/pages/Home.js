@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
 import { getLocales } from 'react-native-localize';
 import quranChaptersBN from '../assets/source/chapters/bn.json';
 import quranChaptersEN from '../assets/source/chapters/en.json';
@@ -15,6 +15,9 @@ import { TextInput } from 'react-native-paper';
 import { Search } from '../components/icons';
 import QuranChapterItem from '../components/QuranChapter';
 import { useTheme } from '@react-navigation/native';
+import TYPOGRAPHY from '../constants/typography';
+import { Quran } from '../image/index';
+import { strings } from '../utils/localization';
 
 const Home = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
@@ -87,7 +90,7 @@ const Home = ({ navigation }) => {
         <View style={[styles.outerContainer, { backgroundColor: COLORS.bgColor }]}>
             <View style={[styles.searchHeader, { backgroundColor: COLORS.brown }]}>
                 <TextInput
-                    placeholder="Search for a chapter.."
+                    placeholder={strings.searchChapterHint}
                     onChangeText={handleSearch}
                     value={searchQuery}
                     mode="outlined"
@@ -104,14 +107,28 @@ const Home = ({ navigation }) => {
                 />
                 <Search width={32} height={32} />
             </View>
-            <FlatList
-                data={filteredQuranChapters}
-                renderItem={({ item }) =>
-                    <QuranChapterItem
-                        item={item}
-                        navigation={navigation} />}
-                keyExtractor={(item) => item.id}
-            />
+            {
+                filteredQuranChapters && filteredQuranChapters.length > 0 ?
+                    <FlatList
+                        data={filteredQuranChapters}
+                        renderItem={({ item }) =>
+                            <QuranChapterItem
+                                item={item}
+                                navigation={navigation} />}
+                        keyExtractor={(item) => item.id}
+                    /> :
+                    <View>
+                        <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>Chapter could'nt find.</Text>
+                        <Image source={Quran}
+                            style={{
+                                height: 145,
+                                width: 225,
+                                alignSelf: 'center',
+                                marginTop: 8
+                            }} />
+                    </View>
+            }
+
         </View>
     );
 };
@@ -128,6 +145,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    noText: {
+        textAlign: 'center',
+        marginTop: 64
     },
 })
 
