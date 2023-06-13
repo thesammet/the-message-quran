@@ -8,6 +8,7 @@ import { Home, Time } from '../components/icons';
 import FlashMessage from 'react-native-flash-message';
 import CustomTabBar from '../components/CustomTabBar';
 import SettingsStack from '../stacks/Settings';
+import { strings } from '../utils/localization';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const Tabs = () => {
                     name="HomeStack"
                     component={HomeStack}
                     options={{
-                        title: 'Home',
+                        title: `${strings.home}`,
                         headerShown: false,
                     }}
                 />
@@ -30,7 +31,7 @@ const Tabs = () => {
                     name="Saved"
                     component={Saved}
                     options={{
-                        title: 'Saved',
+                        title: `${strings.saved}`,
                         headerShown: false,
                     }}
                 />
@@ -38,7 +39,7 @@ const Tabs = () => {
                     name="SettingsStack"
                     component={SettingsStack}
                     options={{
-                        title: 'Settings',
+                        title: `${strings.settings}`,
                         headerShown: false,
                     }}
                 />

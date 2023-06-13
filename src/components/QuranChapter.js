@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import TYPOGRAPHY from '../constants/typography';
 import { useTheme } from '@react-navigation/native';
+import { strings } from '../utils/localization';
 
 const QuranChapterItem = React.memo(({ item, navigation }) => {
     const { COLORS } = useTheme();
@@ -35,7 +36,7 @@ const QuranChapterItem = React.memo(({ item, navigation }) => {
                     <Text style={[styles.title, { color: COLORS.titleColor }, TYPOGRAPHY().H4Medium]}>{item.translation}</Text>
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text style={[styles.verses, { color: COLORS.verseColor }]}>{item.total_verses} verses</Text>
+                    <Text style={[styles.verses, { color: COLORS.verseColor }]}>{item.total_verses} {strings.verses}</Text>
                 </View>
             </View>
         </TouchableOpacity >

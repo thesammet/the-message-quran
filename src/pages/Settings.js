@@ -18,12 +18,13 @@ import { getLocales } from 'react-native-localize';
 import { useTheme } from '@react-navigation/native';
 import { ThemeContext } from '../context/Theme';
 import { BookmarkContext } from '../context/Bookmark';
+import { strings } from '../utils/localization';
 
 const sections = (press, navigation, bookmarkNavigate) => [
     {
-        title: 'Preferences',
+        title: `${strings.preferences}`,
         data: [
-            { title: 'Dark mode', value: false },
+            { title: `${strings.darkMode}`, value: false },
             {
                 title: 'Language',
                 onPress: () => {
@@ -38,16 +39,16 @@ const sections = (press, navigation, bookmarkNavigate) => [
         ],
     },
     {
-        title: 'Font Selection',
+        title: `${strings.fontSelection}`,
         data: [{ title: '', value: 1 }],
     },
     {
-        title: 'App',
+        title: `${strings.app}`,
         data: [
-            { title: 'Bookmark', value: 'x', onPress: () => bookmarkNavigate() },
-            { title: 'Quran Sources', value: 'x', onPress: () => navigation.navigate('QuranSources') },
+            { title: `${strings.bookmark}`, value: 'x', onPress: () => bookmarkNavigate() },
+            { title: `${strings.quranSources}`, value: 'x', onPress: () => navigation.navigate('QuranSources') },
             {
-                title: 'Rate the App',
+                title: `${strings.rateApp}`,
                 value: 'x',
                 onPress: () => {
                     press(
@@ -57,9 +58,9 @@ const sections = (press, navigation, bookmarkNavigate) => [
                     );
                 },
             },
-            { title: 'Share', value: 'x', onPress: () => onShare(shareMessage('tr')) },
+            { title: `${strings.share}`, value: 'x', onPress: () => onShare(shareMessage('tr')) },
             {
-                title: 'Requests and complaints',
+                title: `${strings.requestAndComplaints}`,
                 value: 'x',
                 onPress: () =>
                     handleMailTo('samedakgul99@gmail.com',
@@ -72,8 +73,8 @@ const sections = (press, navigation, bookmarkNavigate) => [
 
 const shareMessage = (lang) => {
     const appTitle = "The Message: Quran";
-    const iOSLink = "www.google.com";
-    const androidLink = "www.google.com";
+    const iOSLink = 'https://apps.apple.com/us/app/ayb%C3%BC-mobil/id1658659307';
+    const androidLink = 'https://play.google.com/store/apps/details?id=com.scopely.monopolygo&hl=tr&gl=US';
 
     const languageTranslations = {
         bn: "Bengali",
@@ -255,10 +256,10 @@ const handleMailTo = async (email, subject, body) => {
         if (supported) {
             await Linking.openURL(url);
         } else {
-            throw new Error(`Unable to open URL: ${url}`);
+            throw new Error(`${strings.dontKnowHowOpen} ${url}`);
         }
     } catch (error) {
-        Alert.alert('Error', error.message);
+        Alert.alert(`${strings.error}`, error.message);
     }
 };
 
@@ -278,7 +279,7 @@ const Settings = ({ navigation }) => {
         if (supported) {
             await Linking.openURL(url);
         } else {
-            Alert.alert(`Don't know how to open this URL: ${url}`);
+            Alert.alert(`${strings.dontKnowHowOpen} ${url}`);
         }
     }, []);
 
@@ -293,7 +294,7 @@ const Settings = ({ navigation }) => {
 
     const SettingsItem = ({ title, value, onPress }) => (
         onPress ? (
-            <TouchableOpacity onPress={title == "Bookmark" ?
+            <TouchableOpacity onPress={title == `${strings.bookmark}` ?
                 bookmark ?
                     onPress :
                     console.log("there is no bookmark") :
@@ -303,13 +304,13 @@ const Settings = ({ navigation }) => {
                     <View>
                         <Text style={[TYPOGRAPHY().H4Medium, {
                             color:
-                                title == "Bookmark" ?
+                                title == `${strings.bookmark}` ?
                                     bookmark ?
                                         COLORS.titleColor :
                                         COLORS.disabledItem :
                                     COLORS.titleColor
                         }]}>{title}</Text>
-                        {title == "Bookmark" ?
+                        {title == `${strings.bookmark}` ?
                             !bookmark ?
                                 <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.disabledItem }]}>{"(No saved bookmark.)"}</Text> :
                                 <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.subtitleColor }]}>{bookmark.chapter.chapter_name + " " + bookmark.chapter.moved_item + ". verse"}</Text>

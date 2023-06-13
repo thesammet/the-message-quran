@@ -35,6 +35,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { BookmarkContext } from '../context/Bookmark';
 import { TextInput } from 'react-native-paper';
 import { Quran } from '../image/index';
+import { strings } from '../utils/localization';
 
 const VerseDetail = ({ navigation, route }) => {
   const [quranVerses, setQuranVerses] = useState(quranVersesEN);
@@ -202,16 +203,16 @@ const VerseDetail = ({ navigation, route }) => {
         draggable={true} >
         <View style={styles.bottomSheetContent}>
           <View style={styles.bottomSheetInnerContent}>
-            <Text style={styles.title}>OPTIONS</Text>
+            <Text style={styles.title}>{strings.options}</Text>
             <BottomSheetItem
-              title={"Share"}
+              title={strings.share}
               func={() => {
                 const appName = "The Message - Quran";
                 const chapter = route.params.chapter_name;
                 const verse = selectedItem?.text
                 const chapterVerseCount = selectedItem?.chapter;
                 const verseCount = selectedItem?.verse;
-                const textToShare = `${appName} uygulamasıyla paylaşıyorum.\n\nSure: ${chapter} (${chapterVerseCount}. ayet)\nKuran Ayeti: ${verse} (${verseCount}. ayet)`;
+                const textToShare = `${strings.sharedWith}: ${appName}\n\n${strings.chapter}: ${chapter} (${chapterVerseCount}. ${strings.verse})\n${strings.quranVerse}: ${verse} (${verseCount}. ${strings.verse})`;
                 onShare(textToShare)
               }}></BottomSheetItem>
             <BottomSheetItem
@@ -221,12 +222,12 @@ const VerseDetail = ({ navigation, route }) => {
                 const verse = selectedItem?.text
                 const chapterVerseCount = selectedItem?.chapter;
                 const verseCount = selectedItem?.verse;
-                const textToShare = `Sure: ${chapter} (${chapterVerseCount}. ayet)\nKuran Ayeti: ${verse} (${verseCount}. ayet)`;
+                const textToShare = `${strings.chapter}: ${chapter} (${chapterVerseCount}. ${strings.verse})\n${strings.quranVerse}: ${verse} (${verseCount}. ${strings.verse})`;
                 copyToClipboard(textToShare)
                 bottomSheet.current.close()
               }}></BottomSheetItem>
             <BottomSheetItem
-              title={!saveText ? "Save" : "Unsave"}
+              title={!saveText ? strings.save : strings.unSave}
               func={() => {
                 !saveText ?
                   addSavedVerse(selectedItem?.verse, selectedItem?.chapter) :
@@ -235,7 +236,7 @@ const VerseDetail = ({ navigation, route }) => {
                 bottomSheet.current.close()
               }}></BottomSheetItem>
             <BottomSheetItem
-              title={"Bookmark"}
+              title={strings.bookmark}
               func={() => {
                 saveBookmark({
                   chapter: selectedItem?.chapter,
@@ -257,7 +258,7 @@ const VerseDetail = ({ navigation, route }) => {
               borderRadius: 16,
               paddingVertical: 8
             }}>
-            <Text style={[styles.title, { color: COLORS.titleColor }]}>CLOSE</Text>
+            <Text style={[styles.title, { color: COLORS.titleColor }]}>{strings.close}</Text>
           </TouchableOpacity>
         </View>
       </BottomSheet>
@@ -279,7 +280,7 @@ const VerseDetail = ({ navigation, route }) => {
               alignItems: 'center'
             }}>
               <TextInput
-                placeholder="Search for a verse.."
+                placeholder={strings.searchVerseHint}
                 onChangeText={handleSearch}
                 value={searchQuery}
                 mode="outlined"
@@ -312,7 +313,7 @@ const VerseDetail = ({ navigation, route }) => {
                 </Text>
                 <Text
                   style={[TYPOGRAPHY().H6Medium, { color: COLORS.verseAmountText }]}>
-                  {route.params.chapter_total_verses} verses
+                  {route.params.chapter_total_verses} {strings.verses}
                 </Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -356,7 +357,7 @@ const VerseDetail = ({ navigation, route }) => {
             }}
           />
           : <View>
-            <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>Verse could'nt find.</Text>
+            <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>{strings.verseCouldntFind}</Text>
             <Image source={Quran}
               style={{
                 height: 145,

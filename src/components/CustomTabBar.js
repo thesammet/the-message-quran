@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Quran, Bookmark, Setting } from './icons';
 import { useTheme } from '@react-navigation/native';
+import { strings } from '../utils/localization';
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
     const { COLORS } = useTheme();
@@ -57,50 +58,50 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                             }}>
                             {isFocused ? (
                                 <View>
-                                    {label === 'Home' && (
+                                    {label === strings.home && (
                                         <View style={styles.focusedTab} >
                                             <Quran width={24} height={24} fill={COLORS.tabbarIconColor} />
-                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>Home</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>{strings.home}</Text>
                                         </View>
                                     )}
-                                    {label === 'Saved' && (
+                                    {label === strings.saved && (
                                         <View style={styles.focusedTab} >
                                             <Bookmark width={24} height={24} fill={COLORS.tabbarIconColor} />
-                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>Saved</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>{strings.saved}</Text>
                                         </View>
                                     )}
-                                    {label === 'Settings' && (
+                                    {label === strings.settings && (
                                         <View style={styles.focusedTab} >
                                             <Setting width={24} height={24} fill={COLORS.tabbarIconColor} />
-                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>Settings</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.brown, color: COLORS.tabbarTitleColor }}>{strings.settings}</Text>
                                         </View>
                                     )}
 
                                 </View>
                             ) : (
                                 <View>
-                                    {label === 'Home' && (
+                                    {label === strings.home && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
                                                 <Quran width={24} height={24} fill={COLORS.tabbarPaleIconColor} />
                                             </View>
-                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>Home</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>{strings.home}</Text>
                                         </View>
                                     )}
-                                    {label === 'Saved' && (
+                                    {label === strings.saved && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
                                                 <Bookmark width={24} height={24} fill={COLORS.tabbarPaleIconColor} />
                                             </View>
-                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>Saved</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>{strings.saved}</Text>
                                         </View>
                                     )}
-                                    {label === 'Settings' && (
+                                    {label === strings.settings && (
                                         <View style={{ alignContent: 'center', alignItems: 'center' }} >
                                             <View style={styles.containerUnfocus}>
                                                 <Setting width={24} height={24} fill={COLORS.tabbarPaleIconColor} />
                                             </View>
-                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>Settings</Text>
+                                            <Text style={{ marginTop: 4, color: COLORS.tabbarPaleTitleColor }}>{strings.settings}</Text>
                                         </View>
                                     )}
 

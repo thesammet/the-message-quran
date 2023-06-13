@@ -118,7 +118,7 @@ const Home = ({ navigation }) => {
                         keyExtractor={(item) => item.id}
                     /> :
                     <View>
-                        <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>Chapter could'nt find.</Text>
+                        <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>{strings.chapterCouldntFind}</Text>
                         <Image source={Quran}
                             style={{
                                 height: 145,

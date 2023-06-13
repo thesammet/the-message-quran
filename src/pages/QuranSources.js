@@ -1,23 +1,24 @@
 import React, { useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { strings } from '../utils/localization';
 
 const QuranMealScreen = () => {
     const { COLORS } = useTheme();
     // Quran meal data source
     const quranMealData = [
-        { language: 'Uthmani Quran Text', source: 'The Noble Qur\'an Encyclopedia', link: "https://quranenc.com/en/home" },
-        { language: 'English Transliteration', source: 'tanzil.net', link: "https://tanzil.net/trans/en.transliteration" },
-        { language: 'Bengali Translation', source: 'Muhiuddin Khan (tanzil.net)', link: "https://tanzil.net/trans/bn.bengali" },
-        { language: 'English Translation', source: 'Umm Muhammad (Saheeh International, tanzil.net)', link: "https://tanzil.net/trans/en.sahih" },
-        { language: 'Spanish Translation', source: 'Muhammad Isa García (tanzil.net)', link: "https://tanzil.net/trans/es.garcia" },
-        { language: 'French Translation', source: 'Muhammad Hamidullah (tanzil.net)', link: "https://tanzil.net/trans/fr.hamidullah" },
-        { language: 'Indonesian Translation', source: 'Indonesian Islamic Affairs Ministry (The Noble Qur\'an Encyclopedia)', link: "https://quranenc.com/en/browse/indonesian_affairs" },
-        { language: 'Russian Translation', source: 'Elmir Kuliev (tanzil.net)', link: "https://tanzil.net/trans/ru.kuliev" },
-        { language: 'Swedish Translation', source: 'Knut Bernström (tanzil.net)', link: "https://tanzil.net/trans/sv.bernstrom" },
-        { language: 'Turkish Translation', source: 'Turkish Directorate of Religious Affairs (tanzil.net)', link: "https://tanzil.net/trans/tr.diyanet" },
-        { language: 'Urdu Translation', source: 'Abul A\'la Maududi (tanzil.net)', link: "https://tanzil.net/trans/ur.maududi" },
-        { language: 'Chinese Translation', source: 'Muhammad Makin (The Noble Qur\'an Encyclopedia)', link: "https://quranenc.com/en/browse/chinese_makin" },
+        { language: `Uthmani Quran Text`, source: 'The Noble Qur\'an Encyclopedia', link: "https://quranenc.com/en/home" },
+        { language: `English ${strings.translation}`, source: 'tanzil.net', link: "https://tanzil.net/trans/en.transliteration" },
+        { language: `Bengali ${strings.translation}`, source: 'Muhiuddin Khan (tanzil.net)', link: "https://tanzil.net/trans/bn.bengali" },
+        { language: `English ${strings.translation}`, source: 'Umm Muhammad (Saheeh International, tanzil.net)', link: "https://tanzil.net/trans/en.sahih" },
+        { language: `Spanish ${strings.translation}`, source: 'Muhammad Isa García (tanzil.net)', link: "https://tanzil.net/trans/es.garcia" },
+        { language: `French ${strings.translation}`, source: 'Muhammad Hamidullah (tanzil.net)', link: "https://tanzil.net/trans/fr.hamidullah" },
+        { language: `Indonesian ${strings.translation}`, source: 'Indonesian Islamic Affairs Ministry (The Noble Qur\'an Encyclopedia)', link: "https://quranenc.com/en/browse/indonesian_affairs" },
+        { language: `Russian ${strings.translation}`, source: 'Elmir Kuliev (tanzil.net)', link: "https://tanzil.net/trans/ru.kuliev" },
+        { language: `Swedish ${strings.translation}`, source: 'Knut Bernström (tanzil.net)', link: "https://tanzil.net/trans/sv.bernstrom" },
+        { language: `Turkish ${strings.translation}`, source: 'Turkish Directorate of Religious Affairs (tanzil.net)', link: "https://tanzil.net/trans/tr.diyanet" },
+        { language: `Urdu ${strings.translation}`, source: 'Abul A\'la Maududi (tanzil.net)', link: "https://tanzil.net/trans/ur.maududi" },
+        { language: `Chinese ${strings.translation}`, source: 'Muhammad Makin (The Noble Qur\'an Encyclopedia)', link: "https://quranenc.com/en/browse/chinese_makin" },
     ];
 
     const handlePress = useCallback(async (url) => {
@@ -29,7 +30,7 @@ const QuranMealScreen = () => {
             // by some browser in the mobile
             await Linking.openURL(url);
         } else {
-            Alert.alert(`Don't know how to open this URL: ${url}`);
+            Alert.alert(`${strings.dontKnowHowOpen}: ${url}`);
         }
     }, []);
 

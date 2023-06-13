@@ -30,6 +30,7 @@ import SavedQuranVerseItem from '../components/SavedQuranVerseItem';
 import { Quran } from '../image/index';
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import { useTheme } from '@react-navigation/native';
+import { strings } from '../utils/localization';
 
 const Saved = ({ navigation }) => {
     const [quranChapters, setQuranChapters] = useState(quranChaptersEN);
@@ -163,7 +164,7 @@ const Saved = ({ navigation }) => {
             {
                 (filteredChapters.length == 0 ?
                     <View>
-                        <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>No Saved Chapter</Text>
+                        <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>{strings.noSavedChapter}</Text>
                         <Image source={Quran}
                             style={{
                                 height: 145,
@@ -190,7 +191,7 @@ const Saved = ({ navigation }) => {
             {filteredVerses.length === 0 ? (
                 <View>
                     <Text style={[styles.noText, { color: COLORS.brown }, TYPOGRAPHY.apply().H4Bold]}>
-                        No Saved Verse
+                        {strings.noSavedVerse}
                     </Text>
                     <Image
                         source={Quran}
@@ -249,21 +250,22 @@ const Saved = ({ navigation }) => {
                 draggable={true} >
                 <View style={styles.bottomSheetContent}>
                     <View style={styles.bottomSheetInnerContent}>
-                        <Text style={styles.title}>OPTIONS</Text>
+                        <Text style={styles.title}>{strings.options}</Text>
+                        {/* TODO: Functionality */}
                         <BottomSheetItem
-                            title={"Share"}
+                            title={strings.share}
                             func={() => { console.log("a") }}></BottomSheetItem>
                         <BottomSheetItem
-                            title={"Copy"}
+                            title={strings.copy}
                             func={() => { console.log("a") }}></BottomSheetItem>
                         <BottomSheetItem
-                            title={"Unsave"}
+                            title={strings.unSave}
                             func={() => {
                                 removeSavedVerse(selectedItem?.verse, selectedItem?.chapter)
                                 bottomSheetRef.current.close()
                             }}></BottomSheetItem>
                         <BottomSheetItem
-                            title={"Bookmark"}
+                            title={strings.bookmark}
                             func={() => { console.log("a") }}></BottomSheetItem>
                     </View>
                     <TouchableOpacity
@@ -277,7 +279,7 @@ const Saved = ({ navigation }) => {
                             borderRadius: 16,
                             paddingVertical: 8
                         }}>
-                        <Text style={[styles.title, { color: COLORS.white }]}>CLOSE</Text>
+                        <Text style={[styles.title, { color: COLORS.white }]}>{strings.close}</Text>
                     </TouchableOpacity>
                 </View>
             </BottomSheet>
@@ -289,8 +291,8 @@ const Saved = ({ navigation }) => {
                 tabBarTextStyle={TYPOGRAPHY().H4Medium}
                 tabBarUnderlineStyle={{ backgroundColor: COLORS.white, }}
             >
-                <Tab1 tabLabel='Chapter' />
-                <Tab2 tabLabel='Verse' />
+                <Tab1 tabLabel={strings.chapter} />
+                <Tab2 tabLabel={strings.verse} />
             </ScrollableTabView>
         </View>
     );

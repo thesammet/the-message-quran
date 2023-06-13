@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import TYPOGRAPHY from '../constants/typography';
 import { useTheme } from '@react-navigation/native';
+import { strings } from '../utils/localization';
 
 const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters, bottomSheetRef, func }) => {
     const { chapter } = item;
@@ -26,7 +27,7 @@ const SavedQuranVerseItem = React.memo(({ item, navigation, quranChapters, botto
                         flex: 1
                     }}>
                         <Text style={[styles.subtitle, { color: COLORS.brown }, TYPOGRAPHY().H5Regular]}>
-                            {item.verse}. verse -
+                            {item.verse}. {strings.verse} -
                         </Text>
                         {matchingChapter && (
                             <Text style={[TYPOGRAPHY().H5Regular, { color: COLORS.verseColor }]}>
