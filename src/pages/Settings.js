@@ -312,8 +312,8 @@ const Settings = ({ navigation }) => {
                         }]}>{title}</Text>
                         {title == `${strings.bookmark}` ?
                             !bookmark ?
-                                <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.disabledItem }]}>{"(No saved bookmark.)"}</Text> :
-                                <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.subtitleColor }]}>{bookmark.chapter.chapter_name + " " + bookmark.chapter.moved_item + ". verse"}</Text>
+                                <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.disabledItem }]}>{`(${strings.noSavedBookmark})`}</Text> :
+                                <Text style={[TYPOGRAPHY().H6Regular, { color: COLORS.subtitleColor }]}>{bookmark.chapter.chapter_name + " " + bookmark.chapter.moved_item + `. ${strings.verse}`}</Text>
                             :
                             null}
                     </View>
