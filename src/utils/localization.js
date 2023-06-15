@@ -37,7 +37,8 @@ export let strings = new LocalizedStrings({
         small: "ছোট",
         normal: "সাধারণ",
         mid: "মধ্যম",
-        big: "বড়"
+        big: "বড়",
+        language: "Language"
     },
     en: {
         quranSources: "Quran Sources",
@@ -75,7 +76,9 @@ export let strings = new LocalizedStrings({
         normal: "Normal",
         mid: "Mid",
         big: "Big",
-        noSavedBookmark: "No saved bookmark."
+        noSavedBookmark: "No saved bookmark.",
+        language: "ভাষা",
+
     },
     es: {
         quranSources: "Fuentes del Corán",
@@ -113,7 +116,8 @@ export let strings = new LocalizedStrings({
         small: "Pequeño",
         normal: "Normal",
         mid: "Mediano",
-        big: "Grande"
+        big: "Grande",
+        language: "Idioma"
     },
     fr: {
         quranSources: "Sources du Coran",
@@ -151,7 +155,8 @@ export let strings = new LocalizedStrings({
         small: "Petit",
         normal: "Normal",
         mid: "Moyen",
-        big: "Grand"
+        big: "Grand",
+        language: "Langue"
     },
     id: {
         quranSources: "Sumber Quran",
@@ -189,7 +194,8 @@ export let strings = new LocalizedStrings({
         small: "Kecil",
         normal: "Normal",
         mid: "Sedang",
-        big: "Besar"
+        big: "Besar",
+        language: "Bahasa"
     },
     ru: {
         quranSources: "Источники Корана",
@@ -227,7 +233,8 @@ export let strings = new LocalizedStrings({
         small: "Маленький",
         normal: "Обычный",
         mid: "Средний",
-        big: "Большой"
+        big: "Большой",
+        language: "Язык"
     },
     sv: {
         quranSources: "Koran Källor",
@@ -265,7 +272,8 @@ export let strings = new LocalizedStrings({
         small: "Liten",
         normal: "Normal",
         mid: "Medium",
-        big: "Stor"
+        big: "Stor",
+        language: "Språk"
     },
     tr: {
         quranSources: "Kuran Kaynakları",
@@ -303,7 +311,8 @@ export let strings = new LocalizedStrings({
         small: "Küçük",
         normal: "Normal",
         mid: "Orta",
-        big: "Büyük"
+        big: "Büyük",
+        language: "Dil"
     },
     ur: {
         quranSources: "قرآن کے ذرائع",
@@ -341,7 +350,8 @@ export let strings = new LocalizedStrings({
         small: "چھوٹا",
         normal: "عام",
         mid: "درمیانی",
-        big: "بڑا"
+        big: "بڑا",
+        language: "زبان"
     },
     zh: {
         quranSources: "古兰经来源",
@@ -379,6 +389,7 @@ export let strings = new LocalizedStrings({
         small: "小",
         normal: "正常",
         mid: "中",
-        big: "大"
+        big: "大",
+        language: "语言"
     }
 });

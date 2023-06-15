@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Quran, Bookmark, Setting } from './icons';
 import { useTheme } from '@react-navigation/native';
 import { strings } from '../utils/localization';
@@ -40,7 +40,12 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 };
 
                 return (
-                    <View style={{ flex: 1, borderTopWidth: .5, borderTopColor: COLORS.tabbarBorderTop }} key={index}>
+                    <View style={{
+                        flex: 1,
+                        borderTopWidth: Platform.OS === 'ios' ? .5 : .1,
+                        borderTopColor: COLORS.tabbarBorderTop
+                    }}
+                        key={index}>
                         <TouchableOpacity
                             key={index}
                             accessibilityRole="button"

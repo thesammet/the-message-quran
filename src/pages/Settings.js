@@ -26,7 +26,7 @@ const sections = (press, navigation, bookmarkNavigate) => [
         data: [
             { title: `${strings.darkMode}`, value: false },
             {
-                title: 'Language',
+                title: `${strings.language}`,
                 onPress: () => {
                     press(
                         Platform.OS === 'ios'
@@ -53,8 +53,8 @@ const sections = (press, navigation, bookmarkNavigate) => [
                 onPress: () => {
                     press(
                         Platform.OS === 'ios'
-                            ? 'https://apps.apple.com/us/app/ayb%C3%BC-mobil/id1658659307'
-                            : 'https://play.google.com/store/apps/details?id=com.scopely.monopolygo&hl=tr&gl=US'
+                            ? 'https://apps.apple.com/us/app/the-message-quran/id6450224179'
+                            : 'https://play.google.com/store/apps/details?id=com.themessagequran=tr&gl=US'
                     );
                 },
             },
@@ -73,8 +73,8 @@ const sections = (press, navigation, bookmarkNavigate) => [
 
 const shareMessage = (lang) => {
     const appTitle = "The Message: Quran";
-    const iOSLink = 'https://apps.apple.com/us/app/ayb%C3%BC-mobil/id1658659307';
-    const androidLink = 'https://play.google.com/store/apps/details?id=com.scopely.monopolygo&hl=tr&gl=US';
+    const iOSLink = 'https://apps.apple.com/us/app/the-message-quran/id6450224179';
+    const androidLink = 'https://play.google.com/store/apps/details?id=com.themessagequran=tr&gl=US'
 
     const languageTranslations = {
         bn: "Bengali",
