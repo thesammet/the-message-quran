@@ -28,6 +28,13 @@ const SettingsStack = ({ navigation }) => {
                             headerTitle: null,
                             headerStyle: { backgroundColor: COLORS.brown },
                             headerTintColor: COLORS.white,
+                            headerTitleAlign: "center",
+                            headerTitleContainerStyle: {
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: 'red'
+                            },
                             headerLeft: () =>
                                 <TouchableOpacity
                                     onPress={() => {
