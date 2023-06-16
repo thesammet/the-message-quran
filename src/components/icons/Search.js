@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
 const SvgSearch = (props) => (
-  <Svg fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <Svg fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" {...props}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"

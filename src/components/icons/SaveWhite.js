@@ -11,17 +11,13 @@ const SvgSaveWhite = (props) => (
     <G
       fill="#ffffff"
       fillRule="nonzero"
-      stroke="none"
+      stroke="#FFFFFF"
       strokeWidth={1}
       strokeLinecap="butt"
       strokeLinejoin="miter"
       strokeMiterlimit={10}
       strokeDasharray=""
       strokeDashoffset={0}
-      fontFamily="none"
-      fontWeight="none"
-      fontSize="none"
-      textAnchor="none"
       style={{
         mixBlendMode: "normal",
       }}
