@@ -38,7 +38,7 @@ export let strings = new LocalizedStrings({
         normal: "সাধারণ",
         mid: "মধ্যম",
         big: "বড়",
-        language: "Language"
+        language: "ভাষা"
     },
     en: {
         quranSources: "Quran Sources",
@@ -77,7 +77,7 @@ export let strings = new LocalizedStrings({
         mid: "Mid",
         big: "Big",
         noSavedBookmark: "No saved bookmark.",
-        language: "ভাষা",
+        language: "Language",
 
     },
     es: {

@@ -14,7 +14,7 @@ export const FontEditorProvider = ({ children }) => {
                 if (size) {
                     setSize(size);
                 } else {
-                    setSize(1)
+                    setSize("1")
                 }
             } catch (error) {
                 console.warn(error);
