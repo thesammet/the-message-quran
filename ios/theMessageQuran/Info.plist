@@ -42,7 +42,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>App would like to access IDFA for tracking purpose</string>
+	<string>Your data will be used to deliver increase the app performance.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>
